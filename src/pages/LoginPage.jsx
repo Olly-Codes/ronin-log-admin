@@ -53,7 +53,7 @@ const LoginPage = () => {
                 />
 
                 <button type="submit" disabled={submitting}>
-                    {submitting ? "Loggin in..." : "Login"}
+                    {submitting ? "Logging in..." : "Login"}
                 </button>
             </form>
         </section>
