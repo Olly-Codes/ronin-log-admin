@@ -10,9 +10,10 @@ const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
+        const storedUser = localStorage.getItem("user");
 
-        if (token) {
-            setUser({ token });
+        if (token && storedUser) {
+            setUser({ ...JSON.parse(storedUser), token});
         }
         setLoading(false);
     }, []);
@@ -20,7 +21,16 @@ const AuthProvider = ({ children }) => {
     const login = async (email, password) => {
         const userData = await authAPI.login(email, password);
         localStorage.setItem("token", userData.token);
-        setUser({ token: userData.token });
+        localStorage.setItem("user", JSON.stringify({
+            id: userData.id,
+            username: userData.username,
+            role: userData.role
+        }));
+        setUser({
+            id: userData.id,
+            username: userData.username,
+            role: userData.role
+        });
     };
 
     const logout = () => {
