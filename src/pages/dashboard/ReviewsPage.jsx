@@ -51,10 +51,13 @@ const ReviewsPage = () => {
                                     <td>{review.score}</td>
                                     <td>{review.published ? "Published" : "Draft"}</td>
                                     <td>
-                                        <button>Edit</button>
+                                        <button type="button">View</button>
                                     </td>
                                     <td>
-                                        <button>Delete</button>
+                                        <button type="button">Edit</button>
+                                    </td>
+                                    <td>
+                                        <button type="button">Delete</button>
                                     </td>
                                 </tr>
                             ))}
