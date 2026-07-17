@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import Markdown from "react-markdown";
 import mediaAPI from "../../api/mediaAPI";
 import demographicsAPI from "../../api/demographicsAPI";
 import genreAPI from "../../api/genreAPI";
+import reviewsAPI from "../../api/reviewsAPI";
 
 const NewReviewPage = () => {
 
@@ -24,6 +26,8 @@ const NewReviewPage = () => {
     const [errors, setErrors] = useState([]);
     const [loadingData, setLoadingData] = useState(true);
     const [uploadingImage, setUploadingImage] = useState(false);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -88,10 +92,9 @@ const NewReviewPage = () => {
         );
     }
 
-    const handleSubmit = (e) => {
-
+    const handleSubmit = async (e) => {
+        setSubmitting(true);
         e.preventDefault();
-
         const newErrors = [];
 
         if (!coverImageUrl || coverImageUrl.length === 0) {
@@ -106,15 +109,22 @@ const NewReviewPage = () => {
 
         if (newErrors.length > 0) return;
 
-        console.log({
-            title,
-            mediaTypeId,
-            demographicId,
-            score,
-            coverImageUrl,
-            bodyMarkdown,
-            selectedGenreIds
-        });
+        try {
+            await reviewsAPI.postCreateReview({
+                demographicId: Number(demographicId),
+                mediaTypeId: Number(mediaTypeId),
+                title,
+                score: Number(score),
+                body: bodyMarkdown,
+                coverImageUrl,
+                genreIds: selectedGenreIds
+            });
+
+            setSubmitting(false);
+            navigate("/admin/dashboard/reviews");
+        } catch (err) {
+            setErrors(["Could not save review"]);
+        }
     };
 
     return (
