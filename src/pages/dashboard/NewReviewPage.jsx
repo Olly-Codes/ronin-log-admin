@@ -19,6 +19,7 @@ const NewReviewPage = () => {
     const [submitting, setSubmitting] = useState(false);
     const [error, setError] = useState("");
     const [loadingData, setLoadingData] = useState(true);
+    const [uploadingImage, setUploadingImage] = useState(false);
 
     useEffect(() => {
 
@@ -41,8 +42,31 @@ const NewReviewPage = () => {
 
     }, []);
 
-    const handleFileUpload = (e) => {
-        console.log("Uploaded");
+    const handleFileUpload = async (e) => {
+        setUploadingImage(true);
+        const uploadPreset = import.meta.env.VITE_UPLOAD_PRESET;
+        const cloudName = import.meta.env.VITE_CLOUD_NAME;
+        const file = e.target.files[0];
+
+        if (!file) return
+
+        try {
+            const data = new FormData();
+            data.append("file", file);
+            data.append("upload_preset", uploadPreset);
+            data.append("cloud_name", cloudName);
+
+            const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+                method: "POST",
+                body: data
+            });
+
+            const uploadedImage = await res.json();
+            setCoverImageUrl(uploadedImage.url);
+            setUploadingImage(false);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     const handleSubmit = (e) => {
@@ -55,13 +79,17 @@ const NewReviewPage = () => {
         <section className="new-review-content">
             <h1>New Review</h1>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="coverImage">Cover Image</label>
-                <input 
-                    type="file" 
-                    id="coverImage" 
-                    value={coverImageUrl} 
-                    onChange={handleFileUpload} 
-                />
+                <div className="img-upload-wrapper">
+                    {uploadingImage ? <p>Uploading...</p> : <p>Upload next img</p> }
+                    <label htmlFor="coverImage">Cover Image</label>
+                    <input 
+                        type="file" 
+                        id="coverImage" 
+                        value={coverImageUrl} 
+                        onChange={handleFileUpload}
+                        required
+                    />
+                </div>
 
                 <label htmlFor="title">Title</label>
                 <input 
