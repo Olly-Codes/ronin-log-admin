@@ -25,10 +25,16 @@ const getSortedReviews = async (sort) => {
     return res.data;
 };
 
+const postCreateReview = async (reviewData) => {
+    const res = await apiClient.post("/reviews", reviewData);
+    return res.data;
+};
+
 export default {
     getReviews,
     getReviewsCount,
     getPublishedReviewsCount,
     getunPublishedReviewsCount,
-    getSortedReviews
+    getSortedReviews,
+    postCreateReview
 }
