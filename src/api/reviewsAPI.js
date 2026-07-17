@@ -25,6 +25,11 @@ const getSortedReviews = async (sort) => {
     return res.data;
 };
 
+const getReviewById = async (id) => {
+    const res = await apiClient.get(`/admin/reviews/${id}`);
+    return res.data;
+};
+
 const postCreateReview = async (reviewData) => {
     const res = await apiClient.post("/reviews", reviewData);
     return res.data;
@@ -36,5 +41,6 @@ export default {
     getPublishedReviewsCount,
     getunPublishedReviewsCount,
     getSortedReviews,
+    getReviewById,
     postCreateReview
 }
