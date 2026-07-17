@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import reviewsAPI from "../../api/reviewsAPI";
 
 const ReviewsPage = () => {
 
     const [reviews, setReviews] = useState([]);
     const [loadingReviews, setLoadingReviews] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -26,7 +28,7 @@ const ReviewsPage = () => {
         <section className="reviews-content">
             <div className="heading-wrapper">
                 <h1>Reviews</h1>
-                <button type="button">New Review</button>
+                <button type="button" onClick={() => navigate("new")}>New Review</button>
             </div>
             {loadingReviews ? (
                 <p>Loading reviews...</p>
