@@ -53,7 +53,12 @@ const ReviewsPage = () => {
                                     <td>{review.score}</td>
                                     <td>{review.published ? "Published" : "Draft"}</td>
                                     <td>
-                                        <button type="button">View</button>
+                                        <button 
+                                            type="button"
+                                            onClick={() => navigate(`${review.review_id}`)}
+                                        >
+                                            View
+                                        </button>
                                     </td>
                                     <td>
                                         <button type="button">Edit</button>
