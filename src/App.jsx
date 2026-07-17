@@ -3,11 +3,12 @@ import { useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
-import DashboardHome from "./pages/Dashboard/DashboardHome";
-import UsersPage from "./pages/Dashboard/UsersPage";
-import ReviewsPage from "./pages/Dashboard/ReviewsPage";
-import CommentsPage from "./pages/Dashboard/CommentsPage";
-import GenresPage from "./pages/Dashboard/GenresPage";
+import DashboardHome from "./pages/dashboard/DashboardHome";
+import UsersPage from "./pages/dashboard/UsersPage";
+import ReviewsPage from "./pages/dashboard/ReviewsPage";
+import CommentsPage from "./pages/dashboard/CommentsPage";
+import GenresPage from "./pages/dashboard/GenresPage";
+import NewReviewPage from "./pages/dashboard/NewReviewPage";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
             <Route index element={<DashboardHome />}></Route>
             <Route path="users" element={<UsersPage />}></Route>
             <Route path="reviews" element={<ReviewsPage />}></Route>
+            <Route path="reviews/new" element={<NewReviewPage />}></Route>
             <Route path="comments" element={<CommentsPage />}></Route>
             <Route path="genres" element={<GenresPage />}></Route>
           </Route>
