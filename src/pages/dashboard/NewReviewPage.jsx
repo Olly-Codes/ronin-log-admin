@@ -2,22 +2,26 @@ import { useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import mediaAPI from "../../api/mediaAPI";
 import demographicsAPI from "../../api/demographicsAPI";
+import genreAPI from "../../api/genreAPI";
 
 const NewReviewPage = () => {
 
     const [title, setTitle] = useState("");
 
-    const [mediaType, setMediaType] = useState("");
+    const [mediaTypeId, setMediaTypeId] = useState("1");
     const [mediaOptions, setMediaOptions] = useState([]);
 
-    const [demographic, setDemographic] = useState("");
+    const [demographicId, setDemographicId] = useState("1");
     const [demographicOptions, setDemographicOptions] = useState([]);
+
+    const [genreOptions, setGenreOptions] = useState([]);
+    const [selectedGenreIds, setSelectedGenreIds] = useState([]);
 
     const [score, setScore] = useState("");
     const [coverImageUrl, setCoverImageUrl] = useState("");
     const [bodyMarkdown, setBodyMarkdown] = useState("");
     const [submitting, setSubmitting] = useState(false);
-    const [error, setError] = useState("");
+    const [errors, setErrors] = useState([]);
     const [loadingData, setLoadingData] = useState(true);
     const [uploadingImage, setUploadingImage] = useState(false);
 
@@ -26,11 +30,18 @@ const NewReviewPage = () => {
         const fetchData = async () => {
 
             try {
-                const mediaTypes = await mediaAPI.getMediaTypes();
+                const [
+                    mediaTypes, 
+                    demographicData, 
+                    genreData] = await Promise.all([
+                        mediaAPI.getMediaTypes(),
+                        demographicsAPI.getDemographics(),
+                        genreAPI.getGenres()
+                    ]);
+                
                 setMediaOptions(mediaTypes.mediaTypes);
-
-                const demographicData = await demographicsAPI.getDemographics();
                 setDemographicOptions(demographicData.demographics);
+                setGenreOptions(genreData.genres);
                 
                 setLoadingData(false);
             } catch (err) {
@@ -69,25 +80,61 @@ const NewReviewPage = () => {
         }
     }
 
+    const handleGenreToggle = (genreId) => {
+        setSelectedGenreIds((prev) =>
+            prev.includes(genreId)
+            ? prev.filter((id) => id !== genreId)
+            : [...prev, genreId]
+        );
+    }
+
     const handleSubmit = (e) => {
 
         e.preventDefault();
-        console.log("I work!");
+
+        const newErrors = [];
+
+        if (!coverImageUrl || coverImageUrl.length === 0) {
+            newErrors.push("Please upload a cover image");
+        }
+
+        if (!selectedGenreIds || selectedGenreIds.length === 0) {
+            newErrors.push("Please pick at least 1 genre")
+        }
+
+        setErrors(newErrors);
+
+        if (newErrors.length > 0) return;
+
+        console.log({
+            title,
+            mediaTypeId,
+            demographicId,
+            score,
+            coverImageUrl,
+            bodyMarkdown,
+            selectedGenreIds
+        });
     };
 
     return (
         <section className="new-review-content">
             <h1>New Review</h1>
             <form onSubmit={handleSubmit}>
+                {errors.length > 0 ? (
+                    <ul>
+                        {errors.map((error) => (
+                            <li key={error}>{error}</li>
+                        ))}
+                    </ul>
+                ) : ""}
                 <div className="img-upload-wrapper">
                     {uploadingImage ? <p>Uploading...</p> : <p>Upload next img</p> }
                     <label htmlFor="coverImage">Cover Image</label>
                     <input 
                         type="file" 
                         id="coverImage" 
-                        value={coverImageUrl} 
                         onChange={handleFileUpload}
-                        required
                     />
                 </div>
 
@@ -104,9 +151,9 @@ const NewReviewPage = () => {
                 {loadingData ? (
                     <p>Loading media types...</p>
                 ) : (
-                    <select value={mediaType} onChange={(e) => setMediaType(e.target.value)}>
+                    <select value={mediaTypeId} onChange={(e) => setMediaTypeId(e.target.value)}>
                         {mediaOptions.map((type) => (
-                            <option key={type.media_type_id}>{type.media_type_id}. {type.name}</option>
+                            <option key={type.media_type_id} value={type.media_type_id}>{type.media_type_id}. {type.name}</option>
                         ))}
                     </select>
                 )}
@@ -115,9 +162,9 @@ const NewReviewPage = () => {
                 {loadingData ? (
                     <p>Loading demographics...</p>
                 ) : (
-                    <select value={demographic} onChange={(e) => setDemographic(e.target.value)}>
+                    <select value={demographicId} onChange={(e) => setDemographicId(e.target.value)}>
                         {demographicOptions.map((d) => (
-                            <option key={d.demographic_id}>{d.demographic_id}. {d.name}</option>
+                            <option key={d.demographic_id} value={d.demographic_id}>{d.demographic_id}. {d.name}</option>
                         ))}
                     </select>
                 )}
@@ -130,6 +177,25 @@ const NewReviewPage = () => {
                     defaultValue={0}
                     onChange={(e) => setScore(e.target.value)} 
                 />
+
+                <div className="genre-checkboxes">
+                    {loadingData ? (
+                        <p>Loading genres...</p>
+                    ) : (
+                        <div>
+                            {genreOptions.map((genre) => (
+                                <label key={genre.genre_id}>
+                                    <input 
+                                        type="checkbox"
+                                        checked={selectedGenreIds.includes(genre.genre_id)}
+                                        onChange={() => handleGenreToggle(genre.genre_id)}
+                                    />
+                                    {genre.name}
+                                </label>
+                             ))}
+                        </div>
+                    )}
+                </div>
 
                 <div className="body-editor">
                     <div className="editor-wrapper">
