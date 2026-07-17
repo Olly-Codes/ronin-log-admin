@@ -8,39 +8,48 @@ const DashboardHome = () => {
     const [totalPublished, setTotalPublished] = useState(0);
     const [totalUnpublished, setTotalUnpublished] = useState(0);
     const [totalComments, setTotalComments] = useState(0);
-    const [loadingCounts, setLoadingCounts] = useState(true);
+    const [sortedReviews, setSortedReviews] = useState([]);
+    const [loadingData, setLoadingData] = useState(true);
 
     useEffect(() => {
 
-        const fetchAllCounts = async () => {
+        const fetchData = async () => {
 
             try {
-                const [reviewsCount, publishedCount, unPublishedCount, commentsCount] = await Promise.all([
+                const [
+                    reviewsCount, 
+                    publishedCount, 
+                    unPublishedCount, 
+                    commentsCount,
+                    sortedReviews
+                ] = await Promise.all([
                     reviewsAPI.getReviewsCount(),
                     reviewsAPI.getPublishedReviewsCount(),
                     reviewsAPI.getunPublishedReviewsCount(),
-                    commentsAPI.getCommentsCount()
+                    commentsAPI.getCommentsCount(),
+                    reviewsAPI.getSortedReviews("DESC")
                 ]);
 
                 setTotalReviews(reviewsCount.reviewsCount.count);
                 setTotalPublished(publishedCount.published.count);
                 setTotalUnpublished(unPublishedCount.unpublished.count);
                 setTotalComments(commentsCount.commentsCount.count);
+                setSortedReviews(sortedReviews.sortedReviews);
 
-                setLoadingCounts(false);
+                setLoadingData(false);
             } catch (err) {
                 console.error(err);
             }
         };
 
-        fetchAllCounts()
+        fetchData()
     }, []);
 
     return (
         <section className="dashboard-home-content">
-            <h1>Overview</h1>
+            <h1>Dashboard</h1>
             <div className="overview-counts-wrapper">
-                {loadingCounts ? 
+                {loadingData ? 
                     (<p>Loading counts...</p>) : 
                     (
                         <div>
@@ -51,6 +60,24 @@ const DashboardHome = () => {
                         </div>
                     )
                 }
+            </div>
+
+            <div className="recent-content-wrapper">
+                <div className="recent-reviews">
+                    <h2>Recent Reviews</h2>
+                        {loadingData ? (
+                            <p>Loading reviews...</p>
+                        ) : (
+                            <ul>
+                                {sortedReviews.map((review) => (
+                                    <li key={review.review_id}>
+                                        <p>{review.title}</p>
+                                        <p>{review.published ? "Published" : "Draft"}</p>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                </div>
             </div>
         </section>
     )
