@@ -35,6 +35,11 @@ const postCreateReview = async (reviewData) => {
     return res.data;
 };
 
+const deleteReview = async (id) => {
+    const res = await apiClient.delete(`/reviews/${id}`);
+    return res.data;
+};
+
 export default {
     getReviews,
     getReviewsCount,
@@ -42,5 +47,6 @@ export default {
     getunPublishedReviewsCount,
     getSortedReviews,
     getReviewById,
-    postCreateReview
+    postCreateReview,
+    deleteReview
 }
