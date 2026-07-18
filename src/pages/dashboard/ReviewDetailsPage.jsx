@@ -62,7 +62,7 @@ const ReviewDetailsPage = () => {
             </div>
 
             <div className="revire-comments-section">
-                <h2>Comments</h2>
+                <h2>Comments ({comments.length})</h2>
                 {comments.length > 0 ? (
                     <ul>
                         {comments.map((comment) => (
