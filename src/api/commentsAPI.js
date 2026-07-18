@@ -10,7 +10,13 @@ const getCommentsCount = async () => {
     return res.data;
 };
 
+const deleteComment = async (id) => {
+    const res = await apiClient.delete(`/comments/${id}`);
+    return res.data;
+};
+
 export default {
     getComments,
-    getCommentsCount
+    getCommentsCount,
+    deleteComment
 }
