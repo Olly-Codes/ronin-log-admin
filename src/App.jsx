@@ -13,13 +13,14 @@ import ReviewDetailsPage from "./pages/dashboard/ReviewDetailsPage";
 
 function App() {
 
-  const { loading } = useAuth();
+  const { loading, user } = useAuth();
 
   if (loading) return <p>Loading...</p>;
 
   return (
     <BrowserRouter>
       <Routes>
+          <Route path="/" element={ user ? <Navigate to="/admin/dashboard" /> : <Navigate to="/auth/login" />} />
           <Route path="/auth/login" element={<LoginPage />} />
           <Route 
             path="/admin/dashboard"
