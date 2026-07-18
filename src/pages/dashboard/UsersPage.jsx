@@ -16,13 +16,14 @@ const UsersPage = () => {
                 setUsers(userData.users);
                 setLoadingUsers(false);
             } catch (err) {
-                console.log(err);
                 setError("Could not load users");
             }
         };
 
         fetchUsers();
     }, []);
+
+    if (error) return <p>{error}</p>
 
     return (
         <section className="users-content">
