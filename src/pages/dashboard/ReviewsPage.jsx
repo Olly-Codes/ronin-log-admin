@@ -7,6 +7,7 @@ const ReviewsPage = () => {
     const [reviews, setReviews] = useState([]);
     const [loadingReviews, setLoadingReviews] = useState(true);
     const navigate = useNavigate();
+    const [error, setError] = useState("");
 
     useEffect(() => {
 
@@ -24,6 +25,17 @@ const ReviewsPage = () => {
         fetchReviews();
     }, []);
 
+    const handleDelete = async (id) => {
+        setError("");
+
+        try {
+            await reviewsAPI.deleteReview(id);
+            setReviews((prev) => prev.filter((r) => r.review_id !== id));
+        } catch (err) {
+            setError("Could not delete review");
+        }
+    };
+
     return (
         <section className="reviews-content">
             <div className="heading-wrapper">
@@ -34,6 +46,7 @@ const ReviewsPage = () => {
                 <p>Loading reviews...</p>
             ) : (
                 <div>
+                    {error && <p>{error}</p>}
                     <table>
                         <thead>
                             <tr>
@@ -64,7 +77,12 @@ const ReviewsPage = () => {
                                         <button type="button">Edit</button>
                                     </td>
                                     <td>
-                                        <button type="button">Delete</button>
+                                        <button 
+                                            type="button"
+                                            onClick={() => handleDelete(review.review_id)}
+                                        >
+                                            Delete
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
