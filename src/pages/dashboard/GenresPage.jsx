@@ -1,28 +1,43 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import genreAPI from "../../api/genreAPI";
+import LoadingError from "../../components/LoadingError";
 
 const GenresPage = () => {
 
     const [genres, setGenres] = useState([]);
     const [loadingGenres, setLoadingGenres] = useState(true);
-    const [error, setError] = useState("");
+    const [error, setError] = useState(false);
+
+    const fetchGenres = async () => {
+        setLoadingGenres(true);
+        setError(false);
+
+        try {
+            const genreData = await genreAPI.getGenres();
+            setGenres(genreData.genres);
+            setLoadingGenres(false);
+        } catch (err) {
+            console.log(err);
+            setError(true);
+            setLoadingGenres(false);
+            toast.error("Failed to load genres. Please try again");
+        }
+    };
 
     useEffect(() => {
-
-        const fetchGenres = async () => {
-
-            try {
-                const genreData = await genreAPI.getGenres();
-                setGenres(genreData.genres);
-                setLoadingGenres(false);
-            } catch (err) {
-                console.log(err);
-                setError("Could not load genres");
-            }
-        };
-
         fetchGenres();
     }, []);
+
+    if (error && !loadingGenres) {
+        return (
+            <LoadingError
+                title={"Genres"}
+                errorMessage={"Could not load genres"}
+                fetchData={fetchGenres}
+            />
+        );
+    };
 
     return (
         <section className="genres-content">
