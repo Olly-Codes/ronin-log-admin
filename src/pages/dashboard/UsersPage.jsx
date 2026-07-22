@@ -1,29 +1,43 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import usersAPI from "../../api/usersAPI";
+import LoadingError from "../../components/LoadingError";
 
 const UsersPage = () => {
 
     const [users, setUsers] = useState([]);
     const [loadingUsers, setLoadingUsers] = useState(true);
-    const [error, setError] = useState("");
+    const [error, setError] = useState(false);
+
+    const fetchUsers = async () => {
+        setLoadingUsers(true);
+        setError(false);
+
+        try {
+            const userData = await usersAPI.getUsers();
+            setUsers(userData.users);
+            setLoadingUsers(false);
+        } catch (err) {
+            console.error(err);
+            setError(true);
+            setLoadingUsers(false);
+            toast.error("Failed to load data. Please try again");
+        }
+    };
 
     useEffect(() => {
-
-        const fetchUsers = async () => {
-
-            try {
-                const userData = await usersAPI.getUsers();
-                setUsers(userData.users);
-                setLoadingUsers(false);
-            } catch (err) {
-                setError("Could not load users");
-            }
-        };
-
         fetchUsers();
     }, []);
 
-    if (error) return <p>{error}</p>
+    if (error && !loadingUsers) {
+        return (
+            <LoadingError
+                title={"Users"}
+                errorMessage={"Could not load users"}
+                fetchData={fetchUsers}
+            />
+        );
+    };
 
     return (
         <section className="users-content">
