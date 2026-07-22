@@ -1,39 +1,54 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 import reviewsAPI from "../../api/reviewsAPI";
+import LoadingError from "../../components/LoadingError";
 
 const ReviewsPage = () => {
 
+    const navigate = useNavigate();
     const [reviews, setReviews] = useState([]);
     const [loadingReviews, setLoadingReviews] = useState(true);
-    const navigate = useNavigate();
-    const [error, setError] = useState("");
+    const [error, setError] = useState(false);
+
+    const fetchReviews = async () => {
+        setLoadingReviews(true);
+        setError(false);
+
+        try {
+            const reviews = await reviewsAPI.getReviews();
+            setReviews(reviews.reviews);
+            setLoadingReviews(false);
+        } catch (err) {
+            console.error(err);
+            setError(true);
+            setLoadingReviews(false);
+            toast.error("Failed to load data. Please try again");
+        }
+    };
 
     useEffect(() => {
-
-        const fetchReviews = async () => {
-
-            try {
-                const reviews = await reviewsAPI.getReviews();
-                setReviews(reviews.reviews);
-                setLoadingReviews(false);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-
         fetchReviews();
     }, []);
 
     const handleDelete = async (id) => {
-        setError("");
-
         try {
             await reviewsAPI.deleteReview(id);
+            toast.success("Review deleted successfully");
             setReviews((prev) => prev.filter((r) => r.review_id !== id));
         } catch (err) {
-            setError("Could not delete review");
+            toast.error("Could not delete review");
         }
+    };
+
+    if (error && !loadingReviews) {
+        return (
+            <LoadingError
+                title={"Reviews"}
+                errorMessage={"Could not load reviews"}
+                fetchData={fetchReviews}
+            />
+        );
     };
 
     return (
