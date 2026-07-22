@@ -1,37 +1,54 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import commentsAPI from "../../api/commentsAPI";
+import LoadingError from "../../components/LoadingError";
 
 const CommentsPage = () => {
 
     const [comments, setComments] = useState([]);
     const [loadingComments, setLoadingComments] = useState(true);
-    const [error, setError] = useState("");
+    const [error, setError] = useState(false);
+
+    const fetchComments = async () => {
+        setLoadingComments(true);
+        setError(false);
+
+        try {
+            const comments = await commentsAPI.getComments();
+            setComments(comments.comments);
+            setLoadingComments(false);
+        } catch (err) {
+            console.log(err);
+            setError(true);
+            setLoadingComments(false);
+            toast.error("Failed to load comments. Please try again");
+        }
+    };
 
     useEffect(() => {
-
-        const fetchComments = async () => {
-
-            try {
-                const comments = await commentsAPI.getComments();
-                setComments(comments.comments);
-                setLoadingComments(false);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-
         fetchComments();
     }, []);
 
     const handleDelete = async (id) => {
-        setError("");
 
         try {
             await commentsAPI.deleteComment(id);
+            toast.success("Comment deleted successfully");
             setComments((prev) => prev.filter((c) => c.comment_id !== id));
         } catch (err) {
-            setError("Could not delete comment");
+            console.log(err);
+            toast.error("Could not delete comment");
         }
+    };
+
+    if (error && !loadingComments) {
+        return (
+            <LoadingError
+                title={"Comments"}
+                errorMessage={"Could not load comments"}
+                fetchData={fetchComments}
+            />
+        );
     };
 
     return (
