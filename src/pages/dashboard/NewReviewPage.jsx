@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 import Markdown from "react-markdown";
 import mediaAPI from "../../api/mediaAPI";
 import demographicsAPI from "../../api/demographicsAPI";
 import genreAPI from "../../api/genreAPI";
 import reviewsAPI from "../../api/reviewsAPI";
+import LoadingError from "../../components/LoadingError";
 
 const NewReviewPage = () => {
 
@@ -26,35 +28,37 @@ const NewReviewPage = () => {
     const [errors, setErrors] = useState([]);
     const [loadingData, setLoadingData] = useState(true);
     const [uploadingImage, setUploadingImage] = useState(false);
+    const [error, setError] = useState(false);
 
     const navigate = useNavigate();
 
+    const fetchData = async () => {
+
+        try {
+            const [
+                mediaTypes, 
+                demographicData, 
+                genreData] = await Promise.all([
+                    mediaAPI.getMediaTypes(),
+                    demographicsAPI.getDemographics(),
+                    genreAPI.getGenres()
+                ]);
+            
+            setMediaOptions(mediaTypes.mediaTypes);
+            setDemographicOptions(demographicData.demographics);
+            setGenreOptions(genreData.genres);
+            
+            setLoadingData(false);
+        } catch (err) {
+            console.log(err);
+            setError(true);
+            setLoadingData(false);
+            toast.error("Could not load data. Please try again");
+        }
+    };
+
     useEffect(() => {
-
-        const fetchData = async () => {
-
-            try {
-                const [
-                    mediaTypes, 
-                    demographicData, 
-                    genreData] = await Promise.all([
-                        mediaAPI.getMediaTypes(),
-                        demographicsAPI.getDemographics(),
-                        genreAPI.getGenres()
-                    ]);
-                
-                setMediaOptions(mediaTypes.mediaTypes);
-                setDemographicOptions(demographicData.demographics);
-                setGenreOptions(genreData.genres);
-                
-                setLoadingData(false);
-            } catch (err) {
-                console.log(err);
-            }
-        };
-
         fetchData();
-
     }, []);
 
     const handleFileUpload = async (e) => {
@@ -81,6 +85,7 @@ const NewReviewPage = () => {
             setUploadingImage(false);
         } catch (err) {
             console.log(err);
+            toast.error("Could not upload image. Please try again")
         }
     }
 
@@ -119,12 +124,24 @@ const NewReviewPage = () => {
                 coverImageUrl,
                 genreIds: selectedGenreIds
             });
+            toast.success("Review created successfully");
 
             setSubmitting(false);
             navigate("/admin/dashboard/reviews");
         } catch (err) {
-            setErrors(["Could not save review"]);
+            console.log(err);
+            toast.error("Could not save review")
         }
+    };
+
+    if (error && !loadingData) {
+        return (
+            <LoadingError
+                title={"Error"}
+                errorMessage={"Could not load data"}
+                fetchData={fetchData}
+            />
+        );
     };
 
     return (
