@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import reviewsAPI from "../../api/reviewsAPI";
 import commentsAPI from "../../api/commentsAPI";
+import toast from "react-hot-toast";
 
 const DashboardHome = () => {
 
@@ -10,40 +11,58 @@ const DashboardHome = () => {
     const [totalComments, setTotalComments] = useState(0);
     const [sortedReviews, setSortedReviews] = useState([]);
     const [loadingData, setLoadingData] = useState(true);
+    const [error, setError] = useState(false);
+
+    const fetchData = async () => {
+        setLoadingData(true);
+        setError(false);
+
+        try {
+
+            const [
+                reviewsCount, 
+                publishedCount, 
+                unPublishedCount, 
+                commentsCount,
+                sortedReviews
+            ] = await Promise.all([
+                reviewsAPI.getReviewsCount(),
+                reviewsAPI.getPublishedReviewsCount(),
+                reviewsAPI.getunPublishedReviewsCount(),
+                commentsAPI.getCommentsCount(),
+                reviewsAPI.getSortedReviews("DESC")
+            ]);
+
+            setTotalReviews(reviewsCount.reviewsCount.count);
+            setTotalPublished(publishedCount.published.count);
+            setTotalUnpublished(unPublishedCount.unpublished.count);
+            setTotalComments(commentsCount.commentsCount.count);
+            setSortedReviews(sortedReviews.sortedReviews);
+
+            setLoadingData(false);
+        } catch (err) {
+            console.error(err);
+            setError(true);
+            setLoadingData(false);
+            toast.error("Failed to load dashboard metrics. Please try again.");
+        }
+    };
 
     useEffect(() => {
-
-        const fetchData = async () => {
-
-            try {
-                const [
-                    reviewsCount, 
-                    publishedCount, 
-                    unPublishedCount, 
-                    commentsCount,
-                    sortedReviews
-                ] = await Promise.all([
-                    reviewsAPI.getReviewsCount(),
-                    reviewsAPI.getPublishedReviewsCount(),
-                    reviewsAPI.getunPublishedReviewsCount(),
-                    commentsAPI.getCommentsCount(),
-                    reviewsAPI.getSortedReviews("DESC")
-                ]);
-
-                setTotalReviews(reviewsCount.reviewsCount.count);
-                setTotalPublished(publishedCount.published.count);
-                setTotalUnpublished(unPublishedCount.unpublished.count);
-                setTotalComments(commentsCount.commentsCount.count);
-                setSortedReviews(sortedReviews.sortedReviews);
-
-                setLoadingData(false);
-            } catch (err) {
-                console.error(err);
-            }
-        };
-
-        fetchData()
+        fetchData();
     }, []);
+
+    if (error && !loadingData) {
+        return (
+            <section className="dashboard-home-content">
+                <h1>Dashboard</h1>
+                <div className="error-wrapper">
+                    <p>Could not load dashboard metrics</p>
+                    <button onClick={() => fetchData}>Try again</button>
+                </div>
+            </section>
+        );
+    };
 
     return (
         <section className="dashboard-home-content">
