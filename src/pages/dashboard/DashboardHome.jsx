@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import reviewsAPI from "../../api/reviewsAPI";
 import commentsAPI from "../../api/commentsAPI";
-import toast from "react-hot-toast";
+import LoadingError from "../../components/LoadingError";
+
 
 const DashboardHome = () => {
 
@@ -18,7 +20,7 @@ const DashboardHome = () => {
         setError(false);
 
         try {
-
+            
             const [
                 reviewsCount, 
                 publishedCount, 
@@ -44,7 +46,7 @@ const DashboardHome = () => {
             console.error(err);
             setError(true);
             setLoadingData(false);
-            toast.error("Failed to load dashboard metrics. Please try again.");
+            toast.error("Failed to load data. Please try again");
         }
     };
 
@@ -54,19 +56,19 @@ const DashboardHome = () => {
 
     if (error && !loadingData) {
         return (
-            <section className="dashboard-home-content">
-                <h1>Dashboard</h1>
-                <div className="error-wrapper">
-                    <p>Could not load dashboard metrics</p>
-                    <button onClick={() => fetchData}>Try again</button>
-                </div>
-            </section>
+            <LoadingError
+                title={"Dashboard"}
+                errorMessage={"Could not load dashboard metrics"}
+                fetchData={fetchData}
+            />
         );
     };
 
     return (
         <section className="dashboard-home-content">
-            <h1>Dashboard</h1>
+            <div className="heading-wrapper">
+                <h1>Dashboard</h1>
+            </div>
             <div className="overview-counts-wrapper">
                 {loadingData ? 
                     (<p>Loading counts...</p>) : 
