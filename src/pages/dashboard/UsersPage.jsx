@@ -21,7 +21,7 @@ const UsersPage = () => {
             console.error(err);
             setError(true);
             setLoadingUsers(false);
-            toast.error("Failed to load data. Please try again");
+            toast.error("Failed to load user data. Please try again");
         }
     };
 
