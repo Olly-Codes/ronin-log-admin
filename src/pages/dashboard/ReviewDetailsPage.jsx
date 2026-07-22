@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Markdown from "react-markdown";
 import reviewsAPI from "../../api/reviewsAPI";
+import commentsAPI from "../../api/commentsAPI";
 
 const ReviewDetailsPage = () => {
 
@@ -29,6 +30,17 @@ const ReviewDetailsPage = () => {
 
         fetchReview();
     }, [id]);
+
+    const handleDelete = async (id) => {
+        setError("");
+    
+        try {
+            await commentsAPI.deleteComment(id);
+            setComments((prev) => prev.filter((c) => c.comment_id !== id));
+        } catch (err) {
+            setError("Could not delete comment");
+        }
+    };
 
     if (loadingReview) return <p>Loading review...</p>
     if (error) return <p>{error}</p>
@@ -69,6 +81,12 @@ const ReviewDetailsPage = () => {
                             <li key={comment.comment_id}>
                                 <p>{comment.content}</p>
                                 <p>{comment.username}</p>
+                                <button 
+                                    type="button"
+                                    onClick={() => handleDelete(comment.comment_id)}    
+                                >
+                                    Delete
+                                </button>
                             </li>
                         ))}
                     </ul>
