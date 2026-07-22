@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import toast from "react-hot-toast";
 import Markdown from "react-markdown";
 import reviewsAPI from "../../api/reviewsAPI";
 import commentsAPI from "../../api/commentsAPI";
+import LoadingError from "../../components/LoadingError";
 
 const ReviewDetailsPage = () => {
 
@@ -10,40 +12,52 @@ const ReviewDetailsPage = () => {
     const [review, setReview] = useState([]);
     const [comments, setComments] = useState([]);
     const [loadingReview, setLoadingReview] = useState(true);
-    const [error, setError] = useState("");
+    const [error, setError] = useState(false);
+
+    const fetchReview = async () => {
+        setLoadingReview(true);
+        setError(false);
+
+        try {
+            const reviewData = await reviewsAPI.getReviewById(id);
+            setReview(reviewData.review);
+            setComments(reviewData.comments);
+
+            setLoadingReview(false);
+        } catch (err) {
+            console.error(err);
+            setError(true);
+            setLoadingReview(false);
+            toast.error("Could not load review data. Please try again");
+        }
+    };
 
     useEffect(() => {
-
-        const fetchReview = async () => {
-
-            try {
-                const reviewData = await reviewsAPI.getReviewById(id);
-                console.log(reviewData);
-                setReview(reviewData.review);
-                setComments(reviewData.comments);
-            } catch (err) {
-                setError("Could not load review");
-            } finally {
-                setLoadingReview(false);
-            }
-        }
-
         fetchReview();
     }, [id]);
 
     const handleDelete = async (id) => {
-        setError("");
-    
+
         try {
             await commentsAPI.deleteComment(id);
+            toast.success("Comment deleted succeffully");
             setComments((prev) => prev.filter((c) => c.comment_id !== id));
         } catch (err) {
-            setError("Could not delete comment");
+            toast.error("Could not delete comment");
         }
     };
 
     if (loadingReview) return <p>Loading review...</p>
-    if (error) return <p>{error}</p>
+
+    if (error && !loadingReview) {
+        return (
+            <LoadingError
+                title={"Error"}
+                errorMessage={"Could not load review data. Please try again"}
+                fetchData={fetchReview}
+            />
+        );
+    };
 
     return (
         <section className="review-detail-content">
