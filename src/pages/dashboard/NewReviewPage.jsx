@@ -33,6 +33,8 @@ const NewReviewPage = () => {
     const navigate = useNavigate();
 
     const fetchData = async () => {
+        setLoadingData(true);
+        setError(false);
 
         try {
             const [
