@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
     const [submitting, setSubmitting] = useState(false);
 
     const { login } = useAuth();
@@ -14,14 +14,14 @@ const LoginPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError("");
         setSubmitting(true);
 
         try {
             await login(email, password);
+            toast.success("Logged in succeffully");
             navigate("/admin/dashboard");
         } catch (err) {
-            setError("Invalid email or password");
+            toast.error("Invalid email or password");
         } finally {
             setSubmitting(false);
         }
@@ -31,8 +31,6 @@ const LoginPage = () => {
         <section className="login-content">
             <form onSubmit={handleSubmit}>
                 <h1>Ronin Login</h1>
-
-                {error && <p>{error}</p>}
 
                 <label htmlFor="email">Email</label>
                 <input
