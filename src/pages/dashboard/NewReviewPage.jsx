@@ -109,6 +109,10 @@ const NewReviewPage = () => {
         );
     }
 
+    const selectedGenres = genreOptions
+        .filter((genre) => selectedGenreIds.includes(genre.genre_id))
+        .map((genre) => genre.name);
+
     const handleSubmit = async (e) => {
         setSubmitting(true);
         e.preventDefault();
@@ -256,9 +260,27 @@ const NewReviewPage = () => {
 
                     <div className="preview-wrapper">
                         <p>Body Preview</p>
-                        <h1>{title || "No title"}</h1>
-                        {coverImagePreviewUrl && <img src={coverImagePreviewUrl} alt="Cover preview" />}
-                        <Markdown>{bodyMarkdown}</Markdown>
+                        <div className="preview-img-wrapper">
+                            {coverImagePreviewUrl ? <img src={coverImagePreviewUrl} alt="Cover preview" /> : <p>No image selected</p>}
+                        </div>
+                        <div className="preview-heading-wrapper">
+                            <ul>
+                                <li>{mediaOptions.find((type) => type.media_type_id === Number(mediaTypeId))?.name || "N/A"}</li>
+                                <li>{demographicOptions.find((d) => d.demographic_id === Number(demographicId))?.name || "N/A"}</li>
+                            </ul>
+                            <h1>{title || "No title"}</h1>
+                        </div>
+                        <div className="preview-body-wrapper">
+                            <Markdown>{bodyMarkdown}</Markdown>
+                            <div className="preview-genre-score-wrapper">
+                                <p>Score: {score || "N/A"}</p>
+                                <ul>
+                                    {selectedGenres.map((genre) => (
+                                        <li key={genre}>{genre}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
