@@ -10,6 +10,7 @@ import CommentsPage from "./pages/dashboard/CommentsPage";
 import GenresPage from "./pages/dashboard/GenresPage";
 import NewReviewPage from "./pages/dashboard/NewReviewPage";
 import ReviewDetailsPage from "./pages/dashboard/ReviewDetailsPage";
+import EditReviewPage from "./pages/dashboard/EditReviewPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
             <Route path="reviews/:id" element={<ReviewDetailsPage />}></Route>
             <Route path="comments" element={<CommentsPage />}></Route>
             <Route path="genres" element={<GenresPage />}></Route>
+            <Route path="reviews/:id/edit" element={<EditReviewPage />}></Route>
           </Route>
           <Route path="*" element={<NotFoundPage />} />
       </Routes>
