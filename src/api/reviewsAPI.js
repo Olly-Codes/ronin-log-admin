@@ -40,6 +40,11 @@ const deleteReview = async (id) => {
     return res.data;
 };
 
+const patchReview = async (id, reviewData) => {
+    const res = await apiClient.patch(`/reviews/${id}`, reviewData);
+    return res.data;
+}
+
 export default {
     getReviews,
     getReviewsCount,
@@ -48,5 +53,6 @@ export default {
     getSortedReviews,
     getReviewById,
     postCreateReview,
-    deleteReview
+    deleteReview,
+    patchReview
 }
