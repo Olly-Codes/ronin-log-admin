@@ -89,7 +89,12 @@ const ReviewsPage = () => {
                                         </button>
                                     </td>
                                     <td>
-                                        <button type="button">Edit</button>
+                                        <button 
+                                            type="button"
+                                            onClick={() => navigate(`${review.review_id}/edit`)}
+                                        >
+                                            Edit
+                                        </button>
                                     </td>
                                     <td>
                                         <button 
