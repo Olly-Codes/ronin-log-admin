@@ -22,13 +22,16 @@ const NewReviewPage = () => {
     const [selectedGenreIds, setSelectedGenreIds] = useState([]);
 
     const [score, setScore] = useState("");
-    const [coverImageUrl, setCoverImageUrl] = useState("");
+    const [coverImageFile, setCoverImageFile] = useState("");
+    const [coverImagePreviewUrl, setCoverImagePreviewUrl] = useState("");
     const [bodyMarkdown, setBodyMarkdown] = useState("");
+
     const [submitting, setSubmitting] = useState(false);
     const [errors, setErrors] = useState([]);
+    const [error, setError] = useState(false);
     const [loadingData, setLoadingData] = useState(true);
     const [uploadingImage, setUploadingImage] = useState(false);
-    const [error, setError] = useState(false);
+    
 
     const navigate = useNavigate();
 
@@ -63,33 +66,40 @@ const NewReviewPage = () => {
         fetchData();
     }, []);
 
-    const handleFileUpload = async (e) => {
-        setUploadingImage(true);
+    useEffect(() => {
+        return () => {
+            if (coverImagePreviewUrl) {
+                URL.revokeObjectURL(coverImagePreviewUrl);
+            }
+        }
+    },[coverImagePreviewUrl]);
+
+    const uploadImageToCloudinary = async (file) => {
         const uploadPreset = import.meta.env.VITE_UPLOAD_PRESET;
         const cloudName = import.meta.env.VITE_CLOUD_NAME;
+
+        const data = new FormData();
+        data.append("file", file);
+        data.append("upload_preset", uploadPreset);
+        data.append("cloud_name", cloudName);
+
+        const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+            method: "POST",
+            body: data
+        });
+
+        const uploadedImage = await res.json();
+        return uploadedImage.url;
+    };
+
+    const handleFileSelect = (e) => {
         const file = e.target.files[0];
 
-        if (!file) return
+        if (!file) return;
 
-        try {
-            const data = new FormData();
-            data.append("file", file);
-            data.append("upload_preset", uploadPreset);
-            data.append("cloud_name", cloudName);
-
-            const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-                method: "POST",
-                body: data
-            });
-
-            const uploadedImage = await res.json();
-            setCoverImageUrl(uploadedImage.url);
-            setUploadingImage(false);
-        } catch (err) {
-            console.log(err);
-            toast.error("Could not upload image. Please try again")
-        }
-    }
+        setCoverImageFile(file);
+        setCoverImagePreviewUrl(URL.createObjectURL(file));
+    };
 
     const handleGenreToggle = (genreId) => {
         setSelectedGenreIds((prev) =>
@@ -104,7 +114,7 @@ const NewReviewPage = () => {
         e.preventDefault();
         const newErrors = [];
 
-        if (!coverImageUrl || coverImageUrl.length === 0) {
+        if (!coverImageFile) {
             newErrors.push("Please upload a cover image");
         }
 
@@ -114,16 +124,23 @@ const NewReviewPage = () => {
 
         setErrors(newErrors);
 
-        if (newErrors.length > 0) return;
+        if (newErrors.length > 0) {
+            setSubmitting(false);
+            return;
+        }
 
         try {
+            setUploadingImage(true);
+            const uploadURL = await uploadImageToCloudinary(coverImageFile);
+            setUploadingImage(false);
+
             await reviewsAPI.postCreateReview({
                 demographicId: Number(demographicId),
                 mediaTypeId: Number(mediaTypeId),
                 title,
                 score: Number(score),
                 body: bodyMarkdown,
-                coverImageUrl,
+                coverImageUrl: uploadURL,
                 genreIds: selectedGenreIds
             });
             toast.success("Review created successfully");
@@ -163,7 +180,7 @@ const NewReviewPage = () => {
                     <input 
                         type="file" 
                         id="coverImage" 
-                        onChange={handleFileUpload}
+                        onChange={handleFileSelect}
                     />
                 </div>
 
@@ -239,6 +256,8 @@ const NewReviewPage = () => {
 
                     <div className="preview-wrapper">
                         <p>Body Preview</p>
+                        <h1>{title || "No title"}</h1>
+                        {coverImagePreviewUrl && <img src={coverImagePreviewUrl} alt="Cover preview" />}
                         <Markdown>{bodyMarkdown}</Markdown>
                     </div>
                 </div>
