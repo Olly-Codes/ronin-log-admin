@@ -72,33 +72,47 @@ const DashboardHome = () => {
     ];
 
     return (
-        <section className="dashboard-home-content">
-            <h1>Dashboard</h1>
+        <section>
+            <h1 className="text-2xl font-bold text-gray-900 mb-6">Dashboard</h1>
 
             {loadingData ? 
-                (<p>Loading counts...</p>) : 
+                (<p className="text-gray-500 text-sm">Loading stats...</p>) : 
                 (
-                    <div>
+                    <div className="grid grid-cols-4 gap-4 mb-8">
                         {stats.map((stat) => (
-                            <div key={stat.label}>
-                                <h2>{stat.label}</h2>
-                                <p>{stat.value}</p>
+                            <div 
+                                key={stat.label}
+                                className="bg-white border border-gray-200 rounded-lg p-4"
+                            >
+                                <h2 className="text-sm text-gray-500 mb-1">{stat.label}</h2>
+                                <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
                             </div>
                         ))}
                     </div>
                 )
             }
 
-            <div className="recent-content-wrapper">
-                <h3>Recent Reviews</h3>
+            <div className="bg-white border border-gray-200 rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Reviews</h3>
                 {loadingData ? (
-                    <p>Loading reviews...</p>
+                    <p className="text-gray-500 text-sm">Loading reviews...</p>
                     ) : (
-                        <ul>
+                        <ul className="divide-y divide-gray-200">
                             {sortedReviews.map((review) => (
-                                <li key={review.review_id}>
-                                    <p>{review.title}</p>
-                                    <p>{review.published ? "Published" : "Draft"}</p>
+                                <li 
+                                    key={review.review_id}
+                                    className="flex items-center justify-between py-4"
+                                >
+                                    <p className="text-sm font-medium">{review.title}</p>
+                                    {review.published ? (
+                                        <span className="text-sm font-medium text-green-600">
+                                            Published
+                                        </span>
+                                    ) : (
+                                        <span className="text-sm font-medium text-gray-500">
+                                            Draft
+                                        </span>
+                                    )}
                                 </li>
                             ))}
                         </ul>
