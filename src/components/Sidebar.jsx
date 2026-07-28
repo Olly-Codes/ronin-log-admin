@@ -5,14 +5,31 @@ const Sidebar = () => {
 
     const { logout } = useAuth();
 
+    const links = [
+        { to: "/admin/dashboard", label: "Overview" },
+        { to: "/admin/dashboard/users", label: "Users" },
+        { to: "/admin/dashboard/reviews", label: "Reviews" },
+        { to: "/admin/dashboard/comments", label: "Comments" },
+        { to: "/admin/dashboard/genres", label: "Genres" }
+    ];
+
     return (
         <aside className="dashboard-sidebar">
+            <div>
+                <div>
+                    <h1>Ronin <span>Log</span></h1>
+                </div>
+            </div>
+            
             <nav className="nav">
-                <Link to={"/admin/dashboard"}>Overview</Link>
-                <Link to={"/admin/dashboard/users"}>Users</Link>
-                <Link to={"/admin/dashboard/reviews"}>Reviews</Link>
-                <Link to={"/admin/dashboard/comments"}>Comments</Link>
-                <Link to={"/admin/dashboard/genres"}>Genres</Link>
+                {links.map((link) => (
+                    <Link
+                        key={link.to}
+                        to={link.to}
+                    >
+                        {link.label}
+                    </Link>
+                ))}
             </nav>
             <button onClick={logout}>Logout</button>
         </aside>
