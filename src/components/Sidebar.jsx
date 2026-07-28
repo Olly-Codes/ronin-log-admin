@@ -14,24 +14,33 @@ const Sidebar = () => {
     ];
 
     return (
-        <aside className="dashboard-sidebar">
+        <aside className="w-64 bg-white border-r border-gray-200 flex flex-col">
             <div>
-                <div>
-                    <h1>Ronin <span>Log</span></h1>
+                <div className="px-6 py-6 border-b border-gray-200">
+                    <h1 className="text-xl font-bold text-gray-900">
+                        Ronin <span className="text-red-600">Log</span>
+                    </h1>
                 </div>
+
+                <nav className="flex flex-col p-4 gap-1">
+                    {links.map((link) => (
+                        <Link
+                            key={link.to}
+                            to={link.to}
+                            className="px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-red-600 transition-colors"
+                        >
+                            {link.label}
+                        </Link>
+                    ))}
+                </nav>
             </div>
             
-            <nav className="nav">
-                {links.map((link) => (
-                    <Link
-                        key={link.to}
-                        to={link.to}
-                    >
-                        {link.label}
-                    </Link>
-                ))}
-            </nav>
-            <button onClick={logout}>Logout</button>
+            <button 
+                onClick={logout}
+                className="m-4 bg-red-600 text-white font-semibold py-2 rounded-md hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300"
+                >
+                    Logout
+                </button>
         </aside>
     );
 };
