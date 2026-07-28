@@ -64,41 +64,46 @@ const DashboardHome = () => {
         );
     };
 
+    const stats = [
+        { label: "Total Reviews", value: totalReviews },
+        { label: "Published", value: totalPublished },
+        { label: "Drafts", value: totalUnpublished },
+        { label: "Total Comments", value: totalComments }
+    ];
+
     return (
         <section className="dashboard-home-content">
-            <div className="heading-wrapper">
-                <h1>Dashboard</h1>
-            </div>
-            <div className="overview-counts-wrapper">
-                {loadingData ? 
-                    (<p>Loading counts...</p>) : 
-                    (
-                        <div>
-                            <p>Total Reviews: {totalReviews}</p>
-                            <p>Published: {totalPublished}</p>
-                            <p>Drafts: {totalUnpublished}</p>
-                            <p>Total Comments: {totalComments}</p>
-                        </div>
-                    )
-                }
-            </div>
+            <h1>Dashboard</h1>
+
+            {loadingData ? 
+                (<p>Loading counts...</p>) : 
+                (
+                    <div>
+                        {stats.map((stat) => (
+                            <div key={stat.label}>
+                                <h2>{stat.label}</h2>
+                                <p>{stat.value}</p>
+                            </div>
+                        ))}
+                    </div>
+                )
+            }
 
             <div className="recent-content-wrapper">
-                <div className="recent-reviews">
-                    <h2>Recent Reviews</h2>
-                        {loadingData ? (
-                            <p>Loading reviews...</p>
-                        ) : (
-                            <ul>
-                                {sortedReviews.map((review) => (
-                                    <li key={review.review_id}>
-                                        <p>{review.title}</p>
-                                        <p>{review.published ? "Published" : "Draft"}</p>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                </div>
+                <h3>Recent Reviews</h3>
+                {loadingData ? (
+                    <p>Loading reviews...</p>
+                    ) : (
+                        <ul>
+                            {sortedReviews.map((review) => (
+                                <li key={review.review_id}>
+                                    <p>{review.title}</p>
+                                    <p>{review.published ? "Published" : "Draft"}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    )
+                }
             </div>
         </section>
     )
