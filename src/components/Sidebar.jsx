@@ -34,13 +34,6 @@ const Sidebar = () => {
                     ))}
                 </nav>
             </div>
-            
-            <button 
-                onClick={logout}
-                className="m-4 bg-red-600 text-white font-semibold py-2 rounded-md hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300"
-                >
-                    Logout
-                </button>
         </aside>
     );
 };
