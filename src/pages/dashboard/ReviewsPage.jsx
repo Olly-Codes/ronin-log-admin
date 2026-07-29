@@ -52,62 +52,83 @@ const ReviewsPage = () => {
     };
 
     return (
-        <section className="reviews-content">
-            <div className="heading-wrapper">
-                <h1>Reviews</h1>
-                <button type="button" onClick={() => navigate("new")}>New Review</button>
+        <section>
+            <div className="flex items-center justify-between mb-4">
+                <h1 className="text-2xl font-bold text-gray-900">Reviews</h1>
+                <button 
+                    type="button" 
+                    onClick={() => navigate("new")}
+                    className="bg-red-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-red-700 transition-colors duration-300 cursor-pointer"
+                    >
+                        New Review
+                    </button>
             </div>
+
             {loadingReviews ? (
-                <p>Loading reviews...</p>
+                <p className="text-gray-500 text-sm">Loading reviews...</p>
             ) : (
-                <div>
-                    {error && <p>{error}</p>}
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Media Type</th>
-                                <th>Demographic</th>
-                                <th>Score</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {reviews.map((review) => (
-                                <tr key={review.review_id}>
-                                    <td>{review.title}</td>
-                                    <td>{review.media_type}</td>
-                                    <td>{review.demographic}</td>
-                                    <td>{review.score}</td>
-                                    <td>{review.published ? "Published" : "Draft"}</td>
-                                    <td>
-                                        <button 
-                                            type="button"
-                                            onClick={() => navigate(`${review.review_id}`)}
-                                        >
-                                            View
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button 
-                                            type="button"
-                                            onClick={() => navigate(`${review.review_id}/edit`)}
-                                        >
-                                            Edit
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button 
-                                            type="button"
-                                            onClick={() => handleDelete(review.review_id)}
-                                        >
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {reviews.map((review) => (
+                        <div
+                            key={review.review_id}
+                            className="bg-white border border-gray-200 rounded-lg p-4 flex flex-col justify-between"
+                        >
+                            <div>
+                                <div className="aspect-[16/9] bg-gray-200 overflow-hidden">
+                                    {review.cover_image_url ? (
+                                        <img 
+                                            src={review.cover_image_url}
+                                            alt={review.title}
+                                            className="w-full h-full object-cover"
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full bg-gray-300 flex items-center justify-center">
+                                            No Image
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="p-4">
+                                    <div className="flex items-start justify-between mb-2">
+                                        <h2 className="font-semibold text-gray-900">{review.title}</h2>
+                                        {review.published ? (
+                                            <span className="text-green-600 font-medium text-sm shrink-0 ml-2">Published</span>
+                                        ) : (
+                                            <span className="text-gray-500 font-semibold text-sm">Draft</span>
+                                        )}
+                                    </div>
+
+                                    <p className="text-gray-600 text-sm mb-1">{review.media_type} &bull; {review.demographic}</p>
+                                    <p className="text-gray-600 text-sm mb-4">Score: <span className="font-semibold text-gray-900">{review.score}</span></p>
+                                </div>
+                            </div>
+                            
+
+                            <div className="flex gap-2 pt-2 border-t border-gray-200">
+                                <button
+                                    type="button"
+                                    onClick={() => navigate(`${review.review_id}`)}
+                                    className="flex-1 text-sm font-medium text-gray-600 hover:text-gray-900 py-1"
+                                >
+                                    View
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => navigate(`${review.review_id}/edit`)}
+                                    className="flex-1 text-sm font-medium text-gray-600 hover:text-gray-900 py-1"
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={() => handleDelete(review.review_id)}
+                                    className="flex-1 text-sm font-medium text-gray-600 hover:text-red-900 py-1"
+                                >
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             )}
         </section>
