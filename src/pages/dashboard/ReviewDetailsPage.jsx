@@ -129,7 +129,7 @@ const ReviewDetailsPage = () => {
                             {review.genres.map((genre) => (
                                 <span
                                     key={genre}
-                                    className="text-sm font-medium text-red-600 bg-red-50 px-3 py-1 rounded-md"
+                                    className="text-sm font-medium bg-red-600 text-white px-3 py-1 rounded-md"
                                 >
                                     {genre}
                                 </span>
