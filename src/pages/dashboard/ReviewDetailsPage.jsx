@@ -47,7 +47,7 @@ const ReviewDetailsPage = () => {
         }
     };
 
-    if (loadingReview) return <p>Loading review...</p>
+    if (loadingReview) return <p className="text-gray-500 text-sm">Loading review...</p>
 
     if (error && !loadingReview) {
         return (
@@ -60,53 +60,83 @@ const ReviewDetailsPage = () => {
     };
 
     return (
-        <section className="review-detail-content">
-            <div className="review-img-wrapper">
-                <img src={review.cover_image_url} alt={review.title} />
-            </div>
-            <div className="review-heading-wrapper">
-                <p>{review.media_type} &bull; {review.demographic} &bull; {review.published ? "Published" : "Draft"}</p>
-                <h1>{review.title}</h1>
-                <p>Reviewed on {review.created_at}</p>
-            </div>
-            <div className="review-body-wrapper">
-                <Markdown>{review.body}</Markdown>
-            </div>
-            <div className="review-extra-details-wrapper">
-                <div className="review-score-wrapper">
-                    <p>Score</p>
-                    <p>{review.score}</p>
-                </div>
-                <div className="review-genres-wrapper">
-                    <p>Genres</p>
-                    <ul>
-                        {review.genres.map((genre) => (
-                            <li key={genre}>{genre}</li>
-                        ))}
-                    </ul>
-                </div>
+        <section>
+            <div className="aspect-[21/9] bg-gray-300 rounded-lg overflow-hidden mb-4">
+                {review.cover_image_url ? (
+                    <img
+                        src={review.cover_image_url}
+                        alt={review.title}
+                        className="w-full h-full object-cover"
+                    />
+                ) : (
+                    <div className="w-full h-full bg-gray-300 flex items-center justify-center">
+                        No Image
+                    </div>
+                )}
+                
             </div>
 
-            <div className="revire-comments-section">
-                <h2>Comments ({comments.length})</h2>
-                {comments.length > 0 ? (
-                    <ul>
-                        {comments.map((comment) => (
-                            <li key={comment.comment_id}>
-                                <p>{comment.content}</p>
-                                <p>{comment.username}</p>
-                                <button 
-                                    type="button"
-                                    onClick={() => handleDelete(comment.comment_id)}    
+            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(240px,300px)] gap-4">
+                <div className="bg-white border border-gray-200 rounded-lg p-4">
+                    <p className="text-sm text-gray-500 mb-1">
+                        {review.media_type} &bull; {review.demographic} &bull;{" "}
+                        {review.published ? (
+                            <span className="text-green-600 font-medium">Published</span>
+                        ) : (
+                            <span className="text-gray-500 font-medium">Draft</span>
+                        )}
+                    </p>
+                    <h1 className="text-2xl font-bold text-gray-900">{review.title}</h1>
+                    <p className="text-sm text-gray-500 mt-1 mb-4">Reviewed on {review.created_at}</p>
+
+                    <Markdown>{review.body}</Markdown>
+
+                    <div className="mt-8 pt-4 border-t border-gray-200">
+                        <h2 className="text-lg font-semibold text-gray-900 mb-4">Comments ({comments.length})</h2>
+                        {comments.length > 0 ? (
+                            <ul className="divide-y divide-gray-200">
+                                {comments.map((comment) => (
+                                    <li key={comment.comment_id} className="py-3 flex items-start justify-between">
+                                        <div>
+                                            <p className="text-sm text-gray-900">{comment.content}</p>
+                                            <p className="text-sm text-gray-500 mt-1">made by {comment.username}</p>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            onClick={() => handleDelete(comment.comment_id)}
+                                            className="px-2 ml-4 cursor-pointer bg-red-600 text-white font-semibold py-2 rounded-md hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300"
+                                        >
+                                            Delete
+                                        </button>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p className="text-gray-500 text-sm">No comments yet.</p>
+                        )}
+                    </div>
+                </div>
+
+                <div className="flex flex-col gap-4">
+                    <div className="bg-white border border-gray-200 rounded-lg p-4">
+                        <h2 className="text-sm text-gray-500 mb-1">Score</h2>
+                        <p className="text-2xl font-bold text-gray-900">{review.score}</p>
+                    </div>
+
+                    <div className="bg-white border border-gray-200 rounded-lg p-4">
+                        <h2 className="text-sm text-gray-500 mb-2">Genres</h2>
+                        <div className="flex flex-wrap gap-2">
+                            {review.genres.map((genre) => (
+                                <span
+                                    key={genre}
+                                    className="text-sm font-medium text-red-600 bg-red-50 px-3 py-1 rounded-md"
                                 >
-                                    Delete
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No comments yet,</p>
-                )}
+                                    {genre}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     );
