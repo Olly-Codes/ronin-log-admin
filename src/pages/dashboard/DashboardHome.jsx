@@ -97,25 +97,30 @@ const DashboardHome = () => {
                 {loadingData ? (
                     <p className="text-gray-500 text-sm">Loading reviews...</p>
                     ) : (
-                        <ul className="divide-y divide-gray-200">
-                            {sortedReviews.map((review) => (
-                                <li 
-                                    key={review.review_id}
-                                    className="flex items-center justify-between py-4"
-                                >
-                                    <p className="text-sm font-medium">{review.title}</p>
-                                    {review.published ? (
-                                        <span className="text-sm font-medium text-green-600">
-                                            Published
-                                        </span>
-                                    ) : (
-                                        <span className="text-sm font-medium text-gray-500">
-                                            Draft
-                                        </span>
-                                    )}
-                                </li>
-                            ))}
-                        </ul>
+                        <table className="min-w-full divide-y divide-gray-200">
+                            <thead>
+                                <tr>
+                                    <th className="text-sm font-medium text-left text-gray-500 px-4 py-2">Title</th>
+                                    <th className="text-sm font-medium text-left text-gray-500 px-4 py-2">Updated on</th>
+                                    <th className="text-sm font-medium text-left text-gray-500 px-4 py-2">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {sortedReviews.map((review) => (
+                                    <tr key={review.review_id} className="border-t border-gray-200">
+                                        <td className="px-4 py-2">{review.title}</td>
+                                        <td className="px-4 py-2">{review.updated_at}</td>
+                                        <td className=" px-4 py-2">
+                                            {review.published ? (
+                                                <span className="text-sm font-medium text-green-600">Published</span>
+                                            ) : (
+                                                <span className="text-sm font-medium text-gray-500">Draft</span>
+                                            )}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     )
                 }
             </div>
