@@ -52,30 +52,36 @@ const CommentsPage = () => {
     };
 
     return (
-        <section className="comments-content">
-            <div className="heading-wrapper">
-                <h1>Comments</h1>
-            </div>
-            <div className="comments-wrapper">
-                {error && <p>{error}</p>}
+        <section>
+            <h1 className="text-2xl font-bold text-gray-900 mb-6">Comments</h1>
+            <div className="bg-white border border-gray-200 rounded-lg p-4">
                 {loadingComments ? (
-                    <p>Loading Comments...</p>
+                    <p className="text-gray-500 text-sm">Loading Comments...</p>
                 ) : (
-                    <ul>
+                    <div className="divide-y divide-gray-200">
                         {comments.map((comment) => (
-                            <li key={comment.comment_id}>
-                                <p>{comment.created_at}</p>
-                                <p>{comment.content}</p>
-                                <p>Made by {comment.username} in {comment.title}</p>
+                            <div 
+                                key={comment.comment_id}
+                                className="py-3 first:pt-0 last:pb-0 flex items-start justify-between gap-4"
+                            >
+                                <div>
+                                    <p className="text-xs text-gray-400 mb-1">{comment.created_at}</p>
+                                    <p className="text-sm text-gray-900 mb-1">{comment.content}</p>
+                                    <p className="text-sm text-gray-500">
+                                        Made by <span className="font-medium text-gray-700">{comment.username}</span> in {"" }
+                                        <span className="font-medium text-gray-700">{comment.title}</span>
+                                    </p>
+                                </div>
                                 <button 
                                     type="button"
-                                    onClick={() => handleDelete(comment.comment_id)}    
+                                    onClick={() => handleDelete(comment.comment_id)}
+                                    className="px-2 ml-4 cursor-pointer bg-red-600 text-white font-semibold py-2 rounded-md hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300"
                                 >
                                     Delete
                                 </button>
-                            </li>
+                            </div>
                         ))}
-                    </ul>
+                    </div>
                 )}
             </div>
         </section>
