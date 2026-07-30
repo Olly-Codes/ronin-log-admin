@@ -169,16 +169,16 @@ const NewReviewPage = () => {
 
     return (
         <section>
-            <h1 className="text-2xl font-bold text-gray-900 mb-6">New Review</h1>
+            <h1 className="text-2xl font-bold text-primary mb-6">New Review</h1>
             <form 
                 onSubmit={handleSubmit}
                 className="grid grid-cols-1 lg:grid-cols-2 gap-6"
             >
-                <div className="bg-white border border-gray-200 rounded-lg p-4 flex flex-col gap-4">
+                <div className="bg-surface border border-border p-4 flex flex-col gap-4">
                     {errors.length > 0 && (
                         <ul>
                             {errors.map((error) => (
-                                <li key={error}>{error}</li>
+                                <li key={error} className="text-accent text-sm">{error}</li>
                             ))}
                         </ul>
                     )}
@@ -186,22 +186,22 @@ const NewReviewPage = () => {
                     <div>
                         <label 
                             htmlFor="coverImage"
-                            className="block text-sm font-medium text-gray-700 mb-1"
+                            className="block text-sm font-medium text-muted mb-1"
                         >
-                            Cover Image {uploadingImage && <span className="text-gray-400 font-normal">Uploading...</span>}
+                            Cover Image {uploadingImage && <span className="text-muted font-normal">Uploading...</span>}
                         </label>
                         <input 
                             type="file" 
                             id="coverImage" 
                             onChange={handleFileSelect}
-                            className="w-full text-sm text-gray-600 file:mr-3 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-red-600 file:text-white hover:file:bg-red-400 file:cursor-pointer cursor-pointer"
+                            className="w-full text-sm text-muted file:mr-3 file:py-2 file:px-4  file:border-0 file:text-sm file:font-medium file:bg-accent file:text-white hover:file:bg-accent-hover file:cursor-pointer cursor-pointer border border-border px-3 py-2"
                         />
                     </div>
 
                     <div>
                         <label
                             htmlFor="title"
-                            className="block text-sm font-medium text-gray-700 mb-1"
+                            className="block text-sm font-medium text-muted mb-1"
                         >
                             Title
                         </label>
@@ -210,7 +210,7 @@ const NewReviewPage = () => {
                             type="text"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                            className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500"
+                            className="w-full bg-background border border-border px-3 py-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-accent"
                             required 
                         />
                     </div>
@@ -219,18 +219,18 @@ const NewReviewPage = () => {
                         <div>
                             <label 
                                 htmlFor="mediaType"
-                                className="block text-sm font-medium text-gray-700 mb-1"
+                                className="block text-sm font-medium text-muted mb-1"
                             >
                                 Media type
                             </label>
                              {loadingData ? (
-                                <p className="text-gray-500 text-sm">Loading...</p>
+                                <p className="text-muted text-sm">Loading...</p>
                             ) : (
                                 <select 
                                     id="mediaType"
                                     value={mediaTypeId}
                                     onChange={(e) => setMediaTypeId(e.target.value)}
-                                    className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500"
+                                    className="w-full bg-background border border-border px-3 py-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-accent"
                                 >
                                     {mediaOptions.map((type) => (
                                         <option key={type.media_type_id} value={type.media_type_id}>{type.media_type_id}. {type.name}</option>
@@ -242,18 +242,18 @@ const NewReviewPage = () => {
                         <div>
                             <label 
                                 htmlFor="demographic"
-                                className="block text-sm font-medium text-gray-700 mb-1"
+                                className="block text-sm font-medium text-muted mb-1"
                             >
                                 Demographic
                             </label>
                             {loadingData ? (
-                                <p>Loading...</p>
+                                <p className="text-muted">Loading...</p>
                             ) : (
                                 <select
                                     id="demographic"
                                     value={demographicId}
                                     onChange={(e) => setDemographicId(e.target.value)}
-                                    className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500"
+                                    className="w-full bg-background border border-border px-3 py-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-accent"
                                 >
                                     {demographicOptions.map((d) => (
                                         <option key={d.demographic_id} value={d.demographic_id}>{d.demographic_id}. {d.name}</option>
@@ -266,7 +266,7 @@ const NewReviewPage = () => {
                     <div>
                         <label 
                             htmlFor="score"
-                            className="block text-sm font-medium text-gray-700 mb-1"
+                            className="block text-sm font-medium text-muted mb-1"
                         >
                             Score
                         </label>
@@ -277,18 +277,18 @@ const NewReviewPage = () => {
                             max={10}
                             defaultValue={0}
                             onChange={(e) => setScore(e.target.value)}
-                            className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500"
+                            className="w-full bg-background border border-border px-3 py-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-accent"
                         />
                     </div>
 
                     <div>
-                        <p className="block text-sm font-medium text-gray-700 mb-1">Genres</p>
+                        <p className="block text-sm font-medium text-muted mb-1">Genres</p>
                         {loadingData ? (
-                            <p>Loading...</p>
+                            <p className="text-muted">Loading...</p>
                         ) : (
                             <div className="flex flex-wrap gap-2">
                                 {genreOptions.map((genre) => (
-                                    <label key={genre.genre_id}>
+                                    <label key={genre.genre_id} className="text-primary">
                                         <input 
                                             type="checkbox"
                                             checked={selectedGenreIds.includes(genre.genre_id)}
@@ -305,7 +305,7 @@ const NewReviewPage = () => {
                     <div>
                         <label 
                             htmlFor="bodyMarkdown"
-                            className="block text-sm font-medium text-gray-700 mb-1"
+                            className="block text-sm font-medium text-muted mb-1"
                         >
                             Body (Markdown supported)
                         </label>
@@ -313,7 +313,7 @@ const NewReviewPage = () => {
                             name="bodyMarkdown" 
                             id="bodyMarkdown"
                             onChange={(e) => setBodyMarkdown(e.target.value)}
-                            className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500 min-h-[280px]"
+                            className="w-full bg-background border border-border px-3 py-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-accent min-h-[280px]"
                             required    
                         />
                     </div>
@@ -321,16 +321,16 @@ const NewReviewPage = () => {
                     <button 
                         type="submit" 
                         disabled={submitting}
-                        className="bg-red-600 text-white font-semibold py-2 px-4 rounded-md cursor-pointer hover:bg-red-700 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed self-start"
+                        className="bg-accent text-white font-semibold py-2 px-4 cursor-pointer hover:bg-accent-hover transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed self-start"
                     >
                         {submitting ? "Saving..." : "Save Review"}
                     </button>
                 </div>
 
                 <div className="flex flex-col">
-                    <p className="text-sm font-medium text-gray-500 mb-2">Preview</p>
+                    <p className="text-sm font-medium text-muted mb-2">Preview</p>
 
-                    <div className="aspect-[21/9] bg-gray-300 rounded-lg overflow-hidden mb-4">
+                    <div className="aspect-[21/9] bg-surface-hover overflow-hidden mb-4">
                         {coverImagePreviewUrl ? (
                             <img 
                                 src={coverImagePreviewUrl} 
@@ -338,49 +338,49 @@ const NewReviewPage = () => {
                                 className="w-full h-full object-cover"
                             /> 
                         ) : (
-                            <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm">
+                            <div className="w-full h-full flex items-center justify-center text-muted text-sm">
                                 No image selected
                             </div>
                         )}
                     </div>
 
                     <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_minmax(200, 260px)] gap-4">
-                        <div className="bg-white border border-gray-200 rounded-lg p-4">
-                            <p className="text-sm text-gray-500 mb-1">
+                        <div className="bg-surface border border-border p-4">
+                            <p className="text-sm text-muted mb-1">
                                 {mediaOptions.find((type) => type.media_type_id === Number(mediaTypeId))?.name || "N/A"} &bull;
                                 {" "}{demographicOptions.find((d) => d.demographic_id === Number(demographicId))?.name || "N/A"}
                             </p>
-                            <h2 className="text-2xl font-bold text-gray-900">{title || "No title"}</h2>
+                            <h2 className="text-2xl font-bold text-primary">{title || "No title"}</h2>
 
-                            <div className="mt-4 text-sm text-gray-700">
+                            <div className="mt-4 text-sm text-muted">
                                 {bodyMarkdown ? (
                                     <Markdown>{bodyMarkdown}</Markdown>
                                 ) : (
-                                    <p className="text-gray-400">Review body will appear here...</p>
+                                    <p className="text-muted">Review body will appear here...</p>
                                 )}
                             </div>
                         </div>
 
                         <div className="flex flex-col gap-4">
-                            <div className="bg-white border border-gray-200 rounded-lg p-4">
-                                <h3 className="text-sm text-gray-500 mb-1">Score</h3>
-                                <p className="text-2xl font-bold text-gray-900">{score || 0}</p>
+                            <div className="bg-surface border border-border p-4">
+                                <h3 className="text-sm text-muted mb-1">Score</h3>
+                                <p className="text-2xl font-bold text-primary">{score || 0}</p>
                             </div>
 
-                            <div className="bg-white border border-gray-200 rounded-lg p-4">
-                                <h3 className="text-sm text-gray-500 mb-2">Genres</h3>
+                            <div className="bg-surface border border-border p-4">
+                                <h3 className="text-sm text-muted mb-2">Genres</h3>
                                 <div className="flex flex-wrap gap-2">
                                     {selectedGenres.length > 0 ? (
                                         selectedGenres.map((genre) => (
                                             <span
                                                 key={genre}
-                                                className="text-sm font-medium bg-red-600 text-white px-3 py-1 rounded-md"
+                                                className="text-sm font-medium bg-accent text-white px-3 py-1"
                                             >
                                                 {genre}
                                             </span>
                                         ))
                                     ) : (
-                                        <p className="text-gray-400 text-sm">No genres selected</p>
+                                        <p className="text-muted text-sm">No genres selected</p>
                                     )}
                                 </div>
                             </div>

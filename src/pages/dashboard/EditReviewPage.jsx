@@ -244,15 +244,15 @@ const EditReviewPage = () => {
     return (
         <section>
             <div className="flex items-center justify-between mb-6">
-                <h1 className="text-2xl font-bold text-gray-900">Edit Review</h1>
+                <h1 className="text-2xl font-bold text-primary">Edit Review</h1>
 
                 <button
                     type="button"
                     onClick={handleTogglePublish}
                     disabled={togglingPublish}
-                    className={`font-semibold py-2 px-4 rounded-md cursor-pointer transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed 
+                    className={`font-semibold py-2 px-4 cursor-pointer transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed 
                         ${published 
-                            ? "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50" 
+                            ? "bg-surface border border-border text-primary" 
                             : "bg-red-600 text-white hover:bg-red-700"
                         }`}
                 >
@@ -266,7 +266,7 @@ const EditReviewPage = () => {
                 onSubmit={handleSubmit}
                 className="grid grid-cols-1 lg:grid-cols-2 gap-6"
             >
-                <div className="bg-white border border-gray-200 rounded-lg p-4 flex flex-col gap-4">
+                <div className="bg-surface border border-border p-4 flex flex-col gap-4">
                     {errors.length > 0 && (
                         <ul>
                             {errors.map((err) => (
@@ -278,23 +278,23 @@ const EditReviewPage = () => {
                     <div>
                         <label 
                             htmlFor="coverImage"
-                            className="block text-sm font-medium text-gray-700 mb-1"
+                            className="block text-sm font-medium text-muted mb-1"
                         >
-                            Cover Image {uploadingImage && <span className="text-gray-400 font-normal">uploading...</span>}
+                            Cover Image {uploadingImage && <span className="text-muted font-normal">uploading...</span>}
                         </label>
                         <input
                             type="file"
                             id="coverImage"
                             onChange={handleFileSelect}
-                            className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500"
+                            className="w-full border border-border px-3 py-2 text-sm text-muted file:bg-accent file:mr-3 file:py-2 file:px-4 file:text-primary focus:outline-none focus:ring-2 focus:ring-red-500"
                         />
-                        <p className="text-xs text-gray-400 mt-1">Leave unselected if you would like to keep the current image</p>
+                        <p className="text-xs text-muted mt-1">Leave unselected if you would like to keep the current image</p>
                     </div>
 
                     <div>
                         <label 
                             htmlFor="title"
-                            className="block text-sm font-medium text-gray-700 mb-1"
+                            className="block text-sm font-medium text-muted mb-1"
                         >
                             Title
                         </label>
@@ -303,7 +303,7 @@ const EditReviewPage = () => {
                             type="text"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                            className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500"
+                            className="w-full bg-background border border-border px-3 py-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-red-500"
                             required
                         />
                     </div>
@@ -312,7 +312,7 @@ const EditReviewPage = () => {
                         <div>
                             <label 
                                 htmlFor="mediaType"
-                                className="block text-sm font-medium text-gray-700 mb-1"
+                                className="block text-sm font-medium text-muted mb-1"
                             >
                                 Media type
                             </label>
@@ -320,7 +320,7 @@ const EditReviewPage = () => {
                                 id="mediaType" 
                                 value={mediaTypeId} 
                                 onChange={(e) => setMediaTypeId(e.target.value)}
-                                className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500"
+                                className="w-full bg-background border border-border px-3 py-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-red-500"
                             >
                                 {mediaOptions.map((type) => (
                                     <option key={type.media_type_id} value={type.media_type_id}>{type.media_type_id}. {type.name}</option>
@@ -331,7 +331,7 @@ const EditReviewPage = () => {
                         <div>
                             <label 
                                 htmlFor="demographic"
-                                className="block text-sm font-medium text-gray-700 mb-1"
+                                className="block text-sm font-medium text-muted mb-1"
                             >
                                 Demographic
                             </label>
@@ -339,7 +339,7 @@ const EditReviewPage = () => {
                                 id="demographic" 
                                 value={demographicId} 
                                 onChange={(e) => setDemographicId(e.target.value)}
-                                className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500"
+                                className="w-full bg-background border border-border px-3 py-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-red-500"
                             >
                                 {demographicOptions.map((d) => (
                                     <option key={d.demographic_id} value={d.demographic_id}>{d.demographic_id}. {d.name}</option>
@@ -351,7 +351,7 @@ const EditReviewPage = () => {
                     <div>
                         <label 
                             htmlFor="score"
-                            className="block text-sm font-medium text-gray-700 mb-1"
+                            className="block text-sm font-medium text-muted mb-1"
                         >
                             Score
                         </label>
@@ -361,13 +361,13 @@ const EditReviewPage = () => {
                             max={10}
                             value={score}
                             onChange={(e) => setScore(e.target.value)}
-                            className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500"
+                            className="w-full bg-background border border-border px-3 py-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-red-500"
                         />
                     </div>
 
                     <div>
-                        <p className="block text-sm font-medium text-gray-700 mb-1">Genres</p>
-                        <div className="flex flex-wrap gap-2">
+                        <p className="block text-sm font-medium text-muted mb-1">Genres</p>
+                        <div className="flex flex-wrap gap-2 text-primary">
                             {genreOptions.map((genre) => (
                                 <label key={genre.genre_id}>
                                     <input
@@ -385,7 +385,7 @@ const EditReviewPage = () => {
                     <div>
                         <label 
                             htmlFor="bodyMarkdown"
-                            className="block text-sm font-medium text-gray-700 mb-1"
+                            className="block text-sm font-medium text-muted mb-1"
                         >
                             Body (Markdown supported)
                         </label>
@@ -394,7 +394,7 @@ const EditReviewPage = () => {
                             id="bodyMarkdown"
                             value={bodyMarkdown}
                             onChange={(e) => setBodyMarkdown(e.target.value)}
-                            className="w-full border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-red-500 min-h-[280px]"
+                            className="w-full bg-background border border-border px-3 py-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-red-500 min-h-[280px]"
                             required
                         />
                     </div>
@@ -402,7 +402,7 @@ const EditReviewPage = () => {
                     <button 
                         type="submit" 
                         disabled={submitting}
-                        className="bg-red-600 text-white font-semibold py-2 px-4 rounded-md cursor-pointer hover:bg-red-700 transition-colrs duration-300 disabled:opacity-50 disbaled:cursor-not-allowed self-start"
+                        className="bg-red-600 text-white font-semibold py-2 px-4 cursor-pointer hover:bg-red-700 transition-colrs duration-300 disabled:opacity-50 disbaled:cursor-not-allowed self-start"
                     >
                         {submitting ? "Saving..." : "Save Changes"}
                     </button>
@@ -411,7 +411,7 @@ const EditReviewPage = () => {
                 <div className="flex flex-col">
                     <p className="text-sm font-medium text-gray-500 mb-2">Preview</p>
 
-                    <div className="aspect-[21/9] bg-gray-300 rounded-lg overflow-hidden mb-4">
+                    <div className="aspect-[21/9] bg-gray-300 overflow-hidden mb-4">
                             <img
                                 src={coverImagePreviewUrl || existingCoverImageUrl}
                                 alt="Cover preview"
@@ -420,34 +420,34 @@ const EditReviewPage = () => {
                     </div>
 
                     <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_minmax(200px, 260px)] gap-4">
-                        <div className="bg-white border border-gray-200 rounded-lg p-4">
-                            <p className="text-sm text-gray-500 mb-1">
+                        <div className="bg-surface border border-border p-4">
+                            <p className="text-sm text-muted mb-1">
                                 {mediaOptions.find((type) => type.media_type_id === Number(mediaTypeId))?.name || "N/A"} &bull;
                                 {" "}{demographicOptions.find((d) => d.demographic_id === Number(demographicId))?.name || "N/A"}
                             </p>
-                            <h2 className="text-2xl font-bold text-gray-900">
+                            <h2 className="text-2xl font-bold text-primary">
                                 {title || "No Title"}
                             </h2>
 
-                            <div className="mt-4 text-sm text-gray-700">
+                            <div className="mt-4 text-sm text-primary">
                                 <Markdown>{bodyMarkdown}</Markdown>
                             </div>
                         </div>
 
                         <div className="flex flex-col gap-4">
-                            <div className="bg-white border border-gray-200 rounded-lg p-4">
-                                <h3 className="text-sm text-gray-500 mb-1">Score</h3>
-                                <p className="text-2xl font-bold text-gray-900">{score || 0}</p>
+                            <div className="bg-surface border border-border p-4">
+                                <h3 className="text-sm text-muted mb-1">Score</h3>
+                                <p className="text-2xl font-bold text-primary">{score || 0}</p>
                             </div>
 
-                            <div className="bg-white border border-gray-200 rounded-lg p-4">
-                                <h3 className="text-sm text-gray-500 mb-2">Genres</h3>
+                            <div className="bg-surface border border-border p-4">
+                                <h3 className="text-sm text-muted mb-2">Genres</h3>
                                 <div className="flex flex-wrap gap-2">
                                     {selectedGenreNames.length > 0 ? (
                                         selectedGenreNames.map((genre) => (
                                             <span
                                                 key={genre}
-                                                className="text-sm font-medium bg-red-600 text-white px-3 py-1 rounded-md"
+                                                className="text-sm font-medium bg-red-600 text-white px-3 py-1"
                                             >
                                                 {genre}
                                             </span>
