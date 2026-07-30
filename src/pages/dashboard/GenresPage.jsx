@@ -43,7 +43,7 @@ const GenresPage = () => {
         <section>
             <h1 className="text-2xl font-bold text-primary mb-6">Genres</h1>
             {loadingGenres ? (
-                <p className="text-muted text-sm">Loading genres...</p>
+                <p className="bg-surface border border-border p-8 text-muted text-sm">Loading genres...</p>
             ) : (
                 <div className="bg-surface border border-border overflow-hidden">
                     <table className="min-w-full divide-y divide-gray-200">

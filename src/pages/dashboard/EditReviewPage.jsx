@@ -238,7 +238,7 @@ const EditReviewPage = () => {
     };
 
     if (loadingData) {
-        return <p>Loading review...</p>;
+        return <p className="bg-surface border border-border p-8 text-muted text-sm">Loading review...</p>;
     }
 
     return (

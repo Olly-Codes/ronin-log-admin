@@ -139,7 +139,7 @@ const DashboardHome = () => {
 
             <div>
                 {loadingData ? 
-                    (<p className="text-muted text-sm">Loading stats...</p>) : 
+                    (<p className="bg-surface border border-border p-4 text-muted text-sm">Loading stats...</p>) : 
                     (
                         <div className="grid grid-rows-4 gap-4 mb-8">
                             {stats.map((stat) => (

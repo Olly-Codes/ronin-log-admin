@@ -65,7 +65,7 @@ const ReviewsPage = () => {
             </div>
 
             {loadingReviews ? (
-                <p className="text-muted text-sm">Loading reviews...</p>
+                <p className="bg-surface border border-border p-8 text-muted text-sm">Loading reviews...</p>
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {reviews.map((review) => (

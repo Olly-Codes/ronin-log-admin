@@ -224,7 +224,7 @@ const NewReviewPage = () => {
                                 Media type
                             </label>
                              {loadingData ? (
-                                <p className="text-muted text-sm">Loading...</p>
+                                <p className="bg-surface border border-border p-4 text-muted text-sm">Loading...</p>
                             ) : (
                                 <select 
                                     id="mediaType"
@@ -247,7 +247,7 @@ const NewReviewPage = () => {
                                 Demographic
                             </label>
                             {loadingData ? (
-                                <p className="text-muted">Loading...</p>
+                                <p className="bg-surface border border-border p-4 text-muted text-sm">Loading...</p>
                             ) : (
                                 <select
                                     id="demographic"
@@ -284,7 +284,7 @@ const NewReviewPage = () => {
                     <div>
                         <p className="block text-sm font-medium text-muted mb-1">Genres</p>
                         {loadingData ? (
-                            <p className="text-muted">Loading...</p>
+                            <p className="bg-surface border border-border p-4 text-muted text-sm">Loading...</p>
                         ) : (
                             <div className="flex flex-wrap gap-2">
                                 {genreOptions.map((genre) => (
