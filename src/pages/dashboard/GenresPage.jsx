@@ -40,38 +40,47 @@ const GenresPage = () => {
     };
 
     return (
-        <section className="genres-content">
-            <div className="heading-wrapper">
-                <h1>Genres</h1>
-            </div>
-            <div className="genres-wrapper">
-                {loadingGenres ? (
-                    <p>Loading genres...</p>
-                ) : (
-                    <div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Genre</th>
+        <section>
+            <h1 className="text-2xl font-bold text-gray-900 mb-6">Genres</h1>
+            {loadingGenres ? (
+                <p className="text-gray-500 text-sm">Loading genres...</p>
+            ) : (
+                <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                    <table className="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr>
+                                <th className="text-sm font-medium text-left text-gray-500 px-4 py-2">Genre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {genres.map((genre) => (
+                                <tr 
+                                    key={genre.genre_id}
+                                    className="border-t border-gray-200"
+                                >
+                                    <td className="px-4 py-2 text-sm text-gray-900">{genre.name}</td>
+                                    <td className="px-4 py-2">
+                                        <div className="flex justify-end gap-3">
+                                            <button 
+                                                type="button"
+                                                className="text-sm font-medium text-gray-600 hover:text-gray-900"
+                                            >
+                                                Edit
+                                            </button>
+                                            <button 
+                                                type="button"
+                                                className="text-sm font-medium text-red-600 hover:text-red-700"
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                {genres.map((genre) => (
-                                    <tr key={genre.genre_id}>
-                                        <td>{genre.name}</td>
-                                        <td>
-                                            <button type="button">Edit</button>
-                                        </td>
-                                        <td>
-                                            <button type="button">Delete</button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                )}
-            </div>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
         </section>
     )
 };
