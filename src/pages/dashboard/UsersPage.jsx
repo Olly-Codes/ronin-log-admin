@@ -40,42 +40,50 @@ const UsersPage = () => {
     };
 
     return (
-        <section className="users-content">
-            <div className="heading-wrapper">
-                <h1>Users</h1>
-            </div>
-            <div className="users-wrapper">
+        <section>
+            <h1 className="text-2xl font-bold text-gray-900 mb-6">Users</h1>
                 {loadingUsers ? (
-                    <p>Loading users...</p>
+                    <p className="text-gray-500 text-sm">Loading users...</p>
                 ) : (
-                    <div>
-                        <table>
+                    <div className="bg-white border-gray-200 rounded-lg overflow-hidden">
+                        <table className="min-w-full divide-y divide-gray-200">
                             <thead>
                                 <tr>
-                                    <th>Username</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
+                                    <th className="text-sm font-medium text-left text-gray-500 px-4 py-2">Username</th>
+                                    <th className="text-sm font-medium text-left text-gray-500 px-4 py-2">Email</th>
+                                    <th className="text-sm font-medium text-left text-gray-500 px-4 py-2">Role</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {users.map((user) => (
-                                    <tr key={user.user_id}>
-                                        <td>{user.username}</td>
-                                        <td>{user.email}</td>
-                                        <td>{user.role}</td>
-                                        <td>
-                                            <button 
-                                                type="button"
-                                                onClick={() => navigate(`${user.user_id}`)}
-                                            >
-                                                View
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <button type="button">Edit</button>
-                                        </td>
-                                        <td>
-                                            <button type="button">Delete</button>
+                                    <tr 
+                                        key={user.user_id}
+                                        className="border-t border-gray-200"
+                                    >
+                                        <td className="px-4 py-2 text-sm text-gray-900">{user.username}</td>
+                                        <td className="px-4 py-2 text-sm text-gray-500">{user.email}</td>
+                                        <td className="px-4 py-2 text-sm text-gray-500">{user.role}</td>
+                                        <td className="px-4 py-2">
+                                            <div className="flex justify-end gap-3">
+                                                <button 
+                                                    type="button"
+                                                    className="text-sm font-medium text-gray-600 hover:text-gray-900"
+                                                >
+                                                    View
+                                                </button>
+                                                <button 
+                                                    type="button"
+                                                    className="text-sm font-medium text-gray-600 hover:text-gray-900"
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button 
+                                                    type="button"
+                                                    className="text-sm font-medium text-red-600 hover:text-red-700"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
@@ -83,7 +91,6 @@ const UsersPage = () => {
                         </table>
                     </div>
                 )}
-            </div>
         </section>
     )
 };
