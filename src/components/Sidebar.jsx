@@ -16,7 +16,7 @@ const Sidebar = () => {
     return (
         <aside className="w-64 bg-surface border-r border-border flex flex-col">
             <div>
-                <div className="px-6 py-6 border-b border-border">
+                <div className="px-6 py-6">
                     <h1 className="text-xl font-bold text-primary">
                         Ronin <span className="text-accent">Log</span>
                     </h1>
