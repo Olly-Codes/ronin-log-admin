@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { useAuth } from "../../context/AuthContext";
 import toast from "react-hot-toast";
 import reviewsAPI from "../../api/reviewsAPI";
@@ -10,6 +11,7 @@ import bannerImg from "../../Assets/illustrations/undraw_banner.svg";
 const DashboardHome = () => {
 
     const { user } = useAuth();
+    const navigate = useNavigate();
 
     const [totalReviews, setTotalReviews] = useState(0);
     const [totalPublished, setTotalPublished] = useState(0);
@@ -84,7 +86,9 @@ const DashboardHome = () => {
                         {totalUnpublished > 0 ? (
                             <>
                                 <p className="text-muted mb-4">You have {totalUnpublished} draft{totalUnpublished !== 1 ? 's' : ''} waiting to be published.</p>
-                                <button className="p-4 bg-accent text-white font-semibold py-2 cursor-pointer hover:bg-accent-hover transition-colors duration-300">
+                                <button
+                                    onClick={() => navigate("reviews")} 
+                                    className="p-4 bg-accent text-white font-semibold py-2 cursor-pointer hover:bg-accent-hover transition-colors duration-300">
                                     View Reviews
                                 </button>
                             </>
@@ -97,8 +101,6 @@ const DashboardHome = () => {
                             </>
                         )}
                     </div>
-                    <img src={bannerImg} alt="Banner" className="hidden sm:block w-60 shrink-0" />
-                    
                 </div>
 
                 <div className="bg-surface border border-border p-4">
