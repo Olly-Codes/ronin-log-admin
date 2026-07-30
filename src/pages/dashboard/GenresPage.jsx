@@ -41,15 +41,15 @@ const GenresPage = () => {
 
     return (
         <section>
-            <h1 className="text-2xl font-bold text-gray-900 mb-6">Genres</h1>
+            <h1 className="text-2xl font-bold text-primary mb-6">Genres</h1>
             {loadingGenres ? (
-                <p className="text-gray-500 text-sm">Loading genres...</p>
+                <p className="text-muted text-sm">Loading genres...</p>
             ) : (
-                <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                <div className="bg-surface border border-border overflow-hidden">
                     <table className="min-w-full divide-y divide-gray-200">
                         <thead>
                             <tr>
-                                <th className="text-sm font-medium text-left text-gray-500 px-4 py-2">Genre</th>
+                                <th className="text-sm font-medium text-left text-muted px-4 py-2">Genre</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -58,12 +58,12 @@ const GenresPage = () => {
                                     key={genre.genre_id}
                                     className="border-t border-gray-200"
                                 >
-                                    <td className="px-4 py-2 text-sm text-gray-900">{genre.name}</td>
+                                    <td className="px-4 py-2 text-sm text-primary">{genre.name}</td>
                                     <td className="px-4 py-2">
                                         <div className="flex justify-end gap-3">
                                             <button 
                                                 type="button"
-                                                className="text-sm font-medium text-gray-600 hover:text-gray-900"
+                                                className="text-sm font-medium text-muted hover:text-primary"
                                             >
                                                 Edit
                                             </button>
