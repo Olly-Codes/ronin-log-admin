@@ -61,7 +61,7 @@ const ReviewDetailsPage = () => {
 
     return (
         <section>
-            <div className="aspect-[21/9] bg-gray-300 overflow-hidden mb-4">
+            <div className="aspect-[21/9] bg-surface-hover overflow-hidden mb-4 text-primary">
                 {review.cover_image_url ? (
                     <img
                         src={review.cover_image_url}
@@ -69,7 +69,7 @@ const ReviewDetailsPage = () => {
                         className="w-full h-full object-cover"
                     />
                 ) : (
-                    <div className="w-full h-full bg-gray-300 flex items-center justify-center">
+                    <div className="w-full h-full bg-surface-hover flex items-center justify-center">
                         No Image
                     </div>
                 )}
