@@ -115,14 +115,14 @@ const ReviewsPage = () => {
                                 <button
                                     type="button"
                                     onClick={() => navigate(`${review.review_id}/edit`)}
-                                    className="flex-1 text-sm font-medium text-gray-600 hover:text-gray-900 py-1"
+                                    className="flex-1 text-sm font-medium text-gray-600 hover:text-gray-900"
                                 >
                                     Edit
                                 </button>
                                 <button
                                     type="button"
                                     onClick={() => handleDelete(review.review_id)}
-                                    className="flex-1 text-sm font-medium text-gray-600 hover:text-red-900 py-1"
+                                    className="flex-1 text-sm font-medium text-red-600 hover:text-red-700"
                                 >
                                     Delete
                                 </button>
