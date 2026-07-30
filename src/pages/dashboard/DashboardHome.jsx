@@ -6,6 +6,7 @@ import reviewsAPI from "../../api/reviewsAPI";
 import commentsAPI from "../../api/commentsAPI";
 import LoadingError from "../../components/LoadingError";
 import bannerImg from "../../Assets/illustrations/undraw_banner.svg";
+import { dateFormat } from "../../utils/dateFormatter";
 
 
 const DashboardHome = () => {
@@ -112,7 +113,7 @@ const DashboardHome = () => {
                                 <thead>
                                     <tr>
                                         <th className="text-sm font-medium text-left text-muted px-4 py-2">Title</th>
-                                        <th className="text-sm font-medium text-left text-muted px-4 py-2">Updated on</th>
+                                        <th className="text-sm font-medium text-left text-muted px-4 py-2">Created at</th>
                                         <th className="text-sm font-medium text-left text-muted px-4 py-2">Status</th>
                                     </tr>
                                 </thead>
@@ -120,7 +121,7 @@ const DashboardHome = () => {
                                     {sortedReviews.map((review) => (
                                         <tr key={review.review_id} className="border-t border-border">
                                             <td className="px-4 py-2 text-primary">{review.title}</td>
-                                            <td className="px-4 py-2 text-primary">{review.updated_at}</td>
+                                            <td className="px-4 py-2 text-primary">{dateFormat(review.created_at)}</td>
                                             <td className=" px-4 py-2">
                                                 {review.published ? (
                                                     <span className="text-sm font-medium text-success">Published</span>

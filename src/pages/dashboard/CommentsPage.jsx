@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { dateFormat } from "../../utils/dateFormatter";
 import toast from "react-hot-toast";
 import commentsAPI from "../../api/commentsAPI";
 import LoadingError from "../../components/LoadingError";
+
 
 const CommentsPage = () => {
 
@@ -65,7 +67,7 @@ const CommentsPage = () => {
                                 className="py-3 first:pt-0 last:pb-0 flex items-start justify-between gap-4"
                             >
                                 <div>
-                                    <p className="text-xs text-muted mb-1">{comment.created_at}</p>
+                                    <p className="text-xs text-muted mb-1">{dateFormat(comment.created_at)}</p>
                                     <p className="text-sm text-primary mb-1">{comment.content}</p>
                                     <p className="text-sm text-muted">
                                         Made by <span className="font-medium text-primary">{comment.username}</span> in {"" }

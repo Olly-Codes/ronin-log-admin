@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { dateFormat } from "../../utils/dateFormatter";
 import toast from "react-hot-toast";
 import Markdown from "react-markdown";
 import reviewsAPI from "../../api/reviewsAPI";
@@ -87,7 +88,7 @@ const ReviewDetailsPage = () => {
                         )}
                     </p>
                     <h1 className="text-2xl font-bold text-primary">{review.title}</h1>
-                    <p className="text-sm text-muted mt-1 mb-4">Reviewed on {review.created_at}</p>
+                    <p className="text-sm text-muted mt-1 mb-4">Reviewed on {dateFormat(review.created_at)}</p>
 
                     <div className="text-primary">
                         <Markdown>{review.body}</Markdown>
