@@ -5,7 +5,7 @@ import Header from "../components/Header";
 const DashboardPage = () => {
 
     return (
-        <section className="min-h-screen bg-gray-100 flex">
+        <section className="min-h-screen bg-background flex">
             <Sidebar />
             <div className="flex-1 flex flex-col">
                 <Header />

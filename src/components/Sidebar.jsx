@@ -14,11 +14,11 @@ const Sidebar = () => {
     ];
 
     return (
-        <aside className="w-64 bg-white border-r border-gray-200 flex flex-col">
+        <aside className="w-64 bg-surface border-r border-border flex flex-col">
             <div>
-                <div className="px-6 py-6 border-b border-gray-200">
-                    <h1 className="text-xl font-bold text-gray-900">
-                        Ronin <span className="text-red-600">Log</span>
+                <div className="px-6 py-6 border-b border-border">
+                    <h1 className="text-xl font-bold text-primary">
+                        Ronin <span className="text-accent">Log</span>
                     </h1>
                 </div>
 
@@ -27,7 +27,7 @@ const Sidebar = () => {
                         <Link
                             key={link.to}
                             to={link.to}
-                            className="px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-red-600 transition-colors"
+                            className="px-3 py-2 text-sm font-medium text-muted hover:bg-surface-hover hover:text-accent transition-colors"
                         >
                             {link.label}
                         </Link>

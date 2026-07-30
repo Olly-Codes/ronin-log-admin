@@ -78,20 +78,20 @@ const DashboardHome = () => {
     return (
         <section className="grid grid-cols-[minmax(0,1fr)_minmax(240px,300px)] gap-8">
             <div>
-                <div className="bg-white border border-gray-200 rounded-lg p-4 mb-4 flex items-center justify-between overflow-hidden">
+                <div className="bg-surface border border-border p-4 mb-4 flex items-center justify-between overflow-hidden">
                     <div className="flex-1">
-                        <h1>Welcome Back, <span className="font-bold">{user.username}</span>!</h1>
+                        <h1 className="text-primary">Welcome Back, <span className="font-bold">{user.username}</span>!</h1>
                         {totalUnpublished > 0 ? (
                             <>
-                                <p className="text-gray-600 mb-4">You have {totalUnpublished} draft{totalUnpublished !== 1 ? 's' : ''} waiting to be published.</p>
-                                <button className="p-4 bg-red-600 text-white font-semibold py-2 rounded-md cursor-pointer hover:bg-red-700 transition-colors duration-300">
+                                <p className="text-muted mb-4">You have {totalUnpublished} draft{totalUnpublished !== 1 ? 's' : ''} waiting to be published.</p>
+                                <button className="p-4 bg-accent text-white font-semibold py-2 cursor-pointer hover:bg-accent-hover transition-colors duration-300">
                                     View Reviews
                                 </button>
                             </>
                         ) : (
                             <>
-                                <p>You are all caught up. You can start a new review at any time.</p>
-                                <button className="p-4 bg-red-600 text-white font-semibold py-2 rounded-md cursor-pointer hover:bg-red-700 transition-colors duration-300">
+                                <p className="text-primary">You are all caught up. You can start a new review at any time.</p>
+                                <button className="p-4 bg-accent text-white font-semibold py-2 cursor-pointer hover:bg-accent-hover transition-colors duration-300">
                                     Write a Review
                                 </button>
                             </>
@@ -101,29 +101,29 @@ const DashboardHome = () => {
                     
                 </div>
 
-                <div className="bg-white border border-gray-200 rounded-lg p-4">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Reviews</h3>
+                <div className="bg-surface border border-border p-4">
+                    <h3 className="text-lg font-semibold text-primary mb-4">Recent Reviews</h3>
                     {loadingData ? (
-                        <p className="text-gray-500 text-sm">Loading reviews...</p>
+                        <p className="text-muted text-sm">Loading reviews...</p>
                         ) : (
-                            <table className="min-w-full divide-y divide-gray-200">
+                            <table className="min-w-full divide-y divide-border">
                                 <thead>
                                     <tr>
-                                        <th className="text-sm font-medium text-left text-gray-500 px-4 py-2">Title</th>
-                                        <th className="text-sm font-medium text-left text-gray-500 px-4 py-2">Updated on</th>
-                                        <th className="text-sm font-medium text-left text-gray-500 px-4 py-2">Status</th>
+                                        <th className="text-sm font-medium text-left text-muted px-4 py-2">Title</th>
+                                        <th className="text-sm font-medium text-left text-muted px-4 py-2">Updated on</th>
+                                        <th className="text-sm font-medium text-left text-muted px-4 py-2">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {sortedReviews.map((review) => (
-                                        <tr key={review.review_id} className="border-t border-gray-200">
-                                            <td className="px-4 py-2">{review.title}</td>
-                                            <td className="px-4 py-2">{review.updated_at}</td>
+                                        <tr key={review.review_id} className="border-t border-border">
+                                            <td className="px-4 py-2 text-primary">{review.title}</td>
+                                            <td className="px-4 py-2 text-primary">{review.updated_at}</td>
                                             <td className=" px-4 py-2">
                                                 {review.published ? (
-                                                    <span className="text-sm font-medium text-green-600">Published</span>
+                                                    <span className="text-sm font-medium text-success">Published</span>
                                                 ) : (
-                                                    <span className="text-sm font-medium text-gray-500">Draft</span>
+                                                    <span className="text-sm font-medium text-muted">Draft</span>
                                                 )}
                                             </td>
                                         </tr>
@@ -137,16 +137,16 @@ const DashboardHome = () => {
 
             <div>
                 {loadingData ? 
-                    (<p className="text-gray-500 text-sm">Loading stats...</p>) : 
+                    (<p className="text-muted text-sm">Loading stats...</p>) : 
                     (
                         <div className="grid grid-rows-4 gap-4 mb-8">
                             {stats.map((stat) => (
                                 <div 
                                     key={stat.label}
-                                    className="bg-white border border-gray-200 rounded-lg p-4"
+                                    className="bg-surface border border-border p-4"
                                 >
-                                    <h2 className="text-sm text-gray-500 mb-1">{stat.label}</h2>
-                                    <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                                    <h2 className="text-sm text-muted mb-1">{stat.label}</h2>
+                                    <p className="text-2xl font-bold text-primary">{stat.value}</p>
                                 </div>
                             ))}
                         </div>
