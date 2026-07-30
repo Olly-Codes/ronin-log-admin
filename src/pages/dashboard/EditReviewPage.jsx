@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
+import { capatilize } from "../../utils/capitilizeText";
 import toast from "react-hot-toast";
 import Markdown from "react-markdown";
 import mediaAPI from "../../api/mediaAPI";
@@ -323,7 +324,7 @@ const EditReviewPage = () => {
                                 className="w-full bg-background border border-border px-3 py-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-red-500"
                             >
                                 {mediaOptions.map((type) => (
-                                    <option key={type.media_type_id} value={type.media_type_id}>{type.media_type_id}. {type.name}</option>
+                                    <option key={type.media_type_id} value={type.media_type_id}>{type.media_type_id}. {capatilize(type.name)}</option>
                                 ))}
                             </select>
                         </div>
@@ -342,7 +343,7 @@ const EditReviewPage = () => {
                                 className="w-full bg-background border border-border px-3 py-2 text-sm text-primary focus:outline-none focus:ring-2 focus:ring-red-500"
                             >
                                 {demographicOptions.map((d) => (
-                                    <option key={d.demographic_id} value={d.demographic_id}>{d.demographic_id}. {d.name}</option>
+                                    <option key={d.demographic_id} value={d.demographic_id}>{d.demographic_id}. {capatilize(d.name)}</option>
                                 ))}
                             </select>
                         </div>
@@ -376,7 +377,7 @@ const EditReviewPage = () => {
                                         onChange={() => handleGenreToggle(genre.genre_id)}
                                         className="mr-2"
                                     />
-                                    {genre.name}
+                                    {capatilize(genre.name)}
                                 </label>
                             ))}
                         </div>
@@ -422,11 +423,11 @@ const EditReviewPage = () => {
                     <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_minmax(200px, 260px)] gap-4">
                         <div className="bg-surface border border-border p-4">
                             <p className="text-sm text-muted mb-1">
-                                {mediaOptions.find((type) => type.media_type_id === Number(mediaTypeId))?.name || "N/A"} &bull;
-                                {" "}{demographicOptions.find((d) => d.demographic_id === Number(demographicId))?.name || "N/A"}
+                                {capatilize(mediaOptions.find((type) => type.media_type_id === Number(mediaTypeId))?.name)   || "N/A"} &bull;
+                                {" "}{capatilize(demographicOptions.find((d) => d.demographic_id === Number(demographicId))?.name) || "N/A"}
                             </p>
                             <h2 className="text-2xl font-bold text-primary">
-                                {title || "No Title"}
+                                {capatilize(title) || "No Title"}
                             </h2>
 
                             <div className="mt-4 text-sm text-primary">
@@ -449,7 +450,7 @@ const EditReviewPage = () => {
                                                 key={genre}
                                                 className="text-sm font-medium bg-red-600 text-white px-3 py-1"
                                             >
-                                                {genre}
+                                                {capatilize(genre)}
                                             </span>
                                         ))
                                     ) : (

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { dateFormat } from "../../utils/dateFormatter";
+import { capatilize } from "../../utils/capitilizeText";
 import toast from "react-hot-toast";
 import Markdown from "react-markdown";
 import reviewsAPI from "../../api/reviewsAPI";
@@ -80,7 +81,7 @@ const ReviewDetailsPage = () => {
             <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(240px,300px)] gap-4">
                 <div className="bg-surface border border-border p-4">
                     <p className="text-sm text-muted mb-1">
-                        {review.media_type} &bull; {review.demographic} &bull;{" "}
+                        {capatilize(review.media_type)} &bull; {capatilize(review.demographic)} &bull;{" "}
                         {review.published ? (
                             <span className="text-green-600 font-medium">Published</span>
                         ) : (
@@ -134,7 +135,7 @@ const ReviewDetailsPage = () => {
                                     key={genre}
                                     className="text-sm font-medium bg-red-600 text-white px-3 py-1"
                                 >
-                                    {genre}
+                                    {capatilize(genre)}
                                 </span>
                             ))}
                         </div>

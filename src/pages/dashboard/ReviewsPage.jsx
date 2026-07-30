@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { capatilize } from "../../utils/capitilizeText";
 import toast from "react-hot-toast";
 import reviewsAPI from "../../api/reviewsAPI";
 import LoadingError from "../../components/LoadingError";
@@ -98,7 +99,7 @@ const ReviewsPage = () => {
                                         )}
                                     </div>
 
-                                    <p className="text-muted text-sm mb-1">{review.media_type} &bull; {review.demographic}</p>
+                                    <p className="text-muted text-sm mb-1">{capatilize(review.media_type)} &bull; {capatilize(review.demographic)}</p>
                                     <p className="text-muted text-sm mb-4">Score: <span className="font-semibold text-primary">{review.score}</span></p>
                                 </div>
                             </div>

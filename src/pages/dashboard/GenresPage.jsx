@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { capatilize } from "../../utils/capitilizeText";
 import toast from "react-hot-toast";
 import genreAPI from "../../api/genreAPI";
 import LoadingError from "../../components/LoadingError";
@@ -58,7 +59,7 @@ const GenresPage = () => {
                                     key={genre.genre_id}
                                     className="border-t border-gray-200"
                                 >
-                                    <td className="px-4 py-2 text-sm text-primary">{genre.name}</td>
+                                    <td className="px-4 py-2 text-sm text-primary">{capatilize(genre.name)}</td>
                                     <td className="px-4 py-2">
                                         <div className="flex justify-end gap-3">
                                             <button 
