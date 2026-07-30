@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { NavLink } from "react-router";
 import { useAuth } from "../context/AuthContext";
 import { 
     MdOutlineDashboard, 
@@ -31,14 +31,21 @@ const Sidebar = () => {
 
                 <nav className="flex flex-col p-4 gap-1">
                     {links.map((link) => (
-                        <Link
+                        <NavLink
                             key={link.to}
                             to={link.to}
-                            className="px-3 py-2 text-md font-medium text-muted hover:bg-surface-hover hover:text-accent transition-colors flex"
+                            end={link.to === "/admin/dashboard"}
+                            className={({ isActive }) =>
+                                `flex items-center gap-3 px-3 py-2 text-sm font-medium transition-colors ${
+                                    isActive 
+                                        ? "bg-surface-hover text-accent" 
+                                        : "text-muted hover:bg-surface-hover hover:text-accent"
+                                }`
+                            }
                         >
                             <span className="inline-block mr-2 text-2xl">{link.icon}</span>
                             {link.label}
-                        </Link>
+                        </NavLink>
                     ))}
                 </nav>
             </div>
