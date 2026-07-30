@@ -79,9 +79,8 @@ const DashboardHome = () => {
     ];
 
     return (
-        <section className="grid grid-cols-[minmax(0,1fr)_minmax(240px,300px)] gap-8">
-            <div>
-                <div className="bg-surface border border-border p-4 mb-4 flex items-center justify-between overflow-hidden">
+        <section className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(240px,300px)] gap-8">
+            <div className="order-1 md:order-1 md:col-span-2 bg-surface border border-border p-4 mb-4 flex items-center justify-between overflow-hidden">
                     <div className="flex-1">
                         <h1 className="text-primary">Welcome Back, <span className="font-bold">{user.username}</span>!</h1>
                         {totalUnpublished > 0 ? (
@@ -102,8 +101,28 @@ const DashboardHome = () => {
                             </>
                         )}
                     </div>
-                </div>
+            </div>
 
+            <div className="order-2 md:order-3">
+                {loadingData ? 
+                    (<p className="bg-surface border border-border p-4 text-muted text-sm">Loading stats...</p>) : 
+                    (
+                        <div className="grid grid-rows-4 gap-4 mb-8">
+                            {stats.map((stat) => (
+                                <div 
+                                    key={stat.label}
+                                    className="bg-surface border border-border p-4"
+                                >
+                                    <h2 className="text-sm text-muted mb-1">{stat.label}</h2>
+                                    <p className="text-2xl font-bold text-primary">{stat.value}</p>
+                                </div>
+                            ))}
+                        </div>
+                    )
+                }
+            </div>
+
+            <div className="order-3 md:order-2">
                 <div className="bg-surface border border-border p-4">
                     <h3 className="text-lg font-semibold text-primary mb-4">Recent Reviews</h3>
                     {loadingData ? (
@@ -138,24 +157,7 @@ const DashboardHome = () => {
                 </div>
             </div>
 
-            <div>
-                {loadingData ? 
-                    (<p className="bg-surface border border-border p-4 text-muted text-sm">Loading stats...</p>) : 
-                    (
-                        <div className="grid grid-rows-4 gap-4 mb-8">
-                            {stats.map((stat) => (
-                                <div 
-                                    key={stat.label}
-                                    className="bg-surface border border-border p-4"
-                                >
-                                    <h2 className="text-sm text-muted mb-1">{stat.label}</h2>
-                                    <p className="text-2xl font-bold text-primary">{stat.value}</p>
-                                </div>
-                            ))}
-                        </div>
-                    )
-                }
-            </div>
+            
         </section>
     )
 };
