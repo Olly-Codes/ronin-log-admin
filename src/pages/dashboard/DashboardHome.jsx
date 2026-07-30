@@ -94,7 +94,7 @@ const DashboardHome = () => {
                             </>
                         ) : (
                             <>
-                                <p className="text-primary">You are all caught up. You can start a new review at any time.</p>
+                                <p className="text-muted">You are all caught up. You can start a new review at any time.</p>
                                 <button className="p-4 bg-accent text-white font-semibold py-2 cursor-pointer hover:bg-accent-hover transition-colors duration-300">
                                     Write a Review
                                 </button>
