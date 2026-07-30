@@ -74,7 +74,7 @@ const ReviewsPage = () => {
                             className="bg-surface border border-border p-4 flex flex-col justify-between"
                         >
                             <div>
-                                <div className="aspect-[16/9] bg-surface-hover overflow-hidden">
+                                <div className="aspect-[16/9] bg-surface-hover overflow-hidden text-primary">
                                     {review.cover_image_url ? (
                                         <img 
                                             src={review.cover_image_url}
