@@ -105,6 +105,7 @@ const ReviewsPage = () => {
                                     </div>
 
                                     <p className="text-muted text-sm mb-1">{capatilize(review.media_type)} &bull; {capatilize(review.demographic)}</p>
+                                    <p className="text-muted text-sm mb-1">Author: <span className="font-semibold text-primary">{review.username}</span></p>
                                     <p className="text-muted text-sm mb-4">Score: <span className="font-semibold text-primary">{review.score}</span></p>
                                 </div>
                             </div>
