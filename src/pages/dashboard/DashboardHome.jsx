@@ -94,8 +94,11 @@ const DashboardHome = () => {
                             </>
                         ) : (
                             <>
-                                <p className="text-muted">You are all caught up. You can start a new review at any time.</p>
-                                <button className="p-4 bg-red-600 text-white font-semibold py-2 cursor-pointer hover:bg-accent-hover transition-colors duration-300">
+                                <p className="text-muted mb-2">You are all caught up. You can start a new review at any time.</p>
+                                <button 
+                                    onClick={() => navigate("reviews/new")}
+                                    className="p-4 bg-red-600 text-white font-semibold py-2 cursor-pointer hover:bg-accent-hover transition-colors duration-300"
+                                >
                                     Write a Review
                                 </button>
                             </>
