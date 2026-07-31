@@ -353,7 +353,7 @@ const NewReviewPage = () => {
                             </p>
                             <h2 className="text-2xl font-bold text-primary">{capatilize(title) || "No title"}</h2>
 
-                            <div className="mt-4 text-sm text-muted">
+                            <div className="mt-4 text-sm text-primary">
                                 {bodyMarkdown ? (
                                     <Markdown>{bodyMarkdown}</Markdown>
                                 ) : (
