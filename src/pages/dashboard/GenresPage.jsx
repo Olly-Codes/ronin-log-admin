@@ -46,41 +46,68 @@ const GenresPage = () => {
             {loadingGenres ? (
                 <p className="bg-surface border border-border p-8 text-muted text-sm">Loading genres...</p>
             ) : (
-                <div className="bg-surface border border-border overflow-hidden">
-                    <table className="min-w-full divide-y divide-gray-200">
-                        <thead>
-                            <tr>
-                                <th className="text-sm font-medium text-left text-muted px-4 py-2">Genre</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {genres.map((genre) => (
-                                <tr 
-                                    key={genre.genre_id}
-                                    className="border-t border-gray-200"
-                                >
-                                    <td className="px-4 py-2 text-sm text-primary">{capatilize(genre.name)}</td>
-                                    <td className="px-4 py-2">
-                                        <div className="flex justify-end gap-3">
-                                            <button 
-                                                type="button"
-                                                className="text-sm font-medium text-muted hover:text-primary"
-                                            >
-                                                Edit
-                                            </button>
-                                            <button 
-                                                type="button"
-                                                className="text-sm font-medium text-red-600 hover:text-red-700"
-                                            >
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </td>
+                <>
+                    <div className="hidden md:block bg-surface border border-border overflow-hidden">
+                        <table className="min-w-full divide-y divide-gray-200">
+                            <thead>
+                                <tr>
+                                    <th className="text-sm font-medium text-left text-muted px-4 py-2">Genre</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                {genres.map((genre) => (
+                                    <tr 
+                                        key={genre.genre_id}
+                                        className="border-t border-gray-200"
+                                    >
+                                        <td className="px-4 py-2 text-sm text-primary">{capatilize(genre.name)}</td>
+                                        <td className="px-4 py-2">
+                                            <div className="flex justify-end gap-3">
+                                                <button 
+                                                    type="button"
+                                                    className="text-sm font-medium text-muted hover:text-primary"
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button 
+                                                    type="button"
+                                                    className="text-sm font-medium text-red-600 hover:text-red-700"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div className="md:hidden flex flex-col gap-3">
+                        {genres.map((genre) => (
+                            <div
+                                key={genre.genre_id}
+                                className="bg-surface border border-border p-4 flex items-center justify-between"
+                            >
+                                <p className="text-sm font-medium text-primary">{capatilize(genre.name)}</p>
+                                <div className="flex gap-4">
+                                    <button 
+                                        type="button"
+                                        className="text-sm font-medium text-muted hover:text-primary"
+                                    >
+                                        Edit
+                                    </button>
+                                    <button 
+                                        type="button"
+                                        className="text-sm font-medium text-accent hover:text-accent-hover"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </>
             )}
         </section>
     )
