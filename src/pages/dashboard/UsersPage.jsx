@@ -51,7 +51,12 @@ const UsersPage = () => {
             <h1 className="text-2xl font-bold text-primary mb-6">Users</h1>
                 {loadingUsers ? (
                     <p className="bg-surface border border-border p-8 text-muted text-sm">Loading users...</p>
-                ) : (
+                ) : users.length === 0 ? (
+                    <div className="bg-surface border border-border p-8 text-center">
+                        <p className="text-primary font-medium mb-1">No users yet</p>
+                    </div>
+                ) : 
+                (
                     <>
                         <div className="hidden md:block bg-surface overflow-hidden">
                             <table className="min-w-full divide-y divide-gray-200 border border-border">

@@ -127,7 +127,13 @@ const DashboardHome = () => {
                     <h3 className="text-lg font-semibold text-primary mb-4">Recent Reviews</h3>
                     {loadingData ? (
                         <p className="text-muted text-sm">Loading reviews...</p>
-                        ) : (
+                        ) : sortedReviews.length === 0 ? (
+                            <>
+                                <p className="text-primary font-medium mb-1">No reviews yet</p>
+                                <p className="text-muted text-sm mb-4">Get started by writing your first review</p>
+                            </>
+                        ) :
+                        (
                             <>
                                 <table className="hidden md:table min-w-full divide-y divide-border">
                                     <thead>

@@ -67,6 +67,11 @@ const ReviewsPage = () => {
 
             {loadingReviews ? (
                 <p className="bg-surface border border-border p-8 text-muted text-sm">Loading reviews...</p>
+            ) : reviews.length === 0 ? (
+                <div className="bg-surface border border-border p-8 text-center">
+                    <p className="text-primary font-medium mb-1">No reviews yet</p>
+                    <p className="text-muted text-sm mb-4">Get started by writing your first review</p>
+                </div>
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {reviews.map((review) => (

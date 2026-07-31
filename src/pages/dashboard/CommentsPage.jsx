@@ -59,7 +59,10 @@ const CommentsPage = () => {
             <div className="bg-surface border border-border p-4">
                 {loadingComments ? (
                     <p className="text-muted text-sm">Loading Comments...</p>
-                ) : (
+                ) : comments.length === 0 ? (
+                    <p className="text-primary text-center font-medium mb-1">No comments yet</p>
+                ) : 
+                (
                     <div className="divide-y divide-gray-200">
                         {comments.map((comment) => (
                             <div 

@@ -45,7 +45,13 @@ const GenresPage = () => {
             <h1 className="text-2xl font-bold text-primary mb-6">Genres</h1>
             {loadingGenres ? (
                 <p className="bg-surface border border-border p-8 text-muted text-sm">Loading genres...</p>
-            ) : (
+            ) : genres.length === 0 ? (
+                <div className="bg-surface border border-border p-8 text-center">
+                    <p className="text-primary font-medium mb-1">No reviews yet</p>
+                    <p className="text-muted text-sm">You will need to create some before writing any reviews</p>
+                </div>
+            ) : 
+            (
                 <>
                     <div className="hidden md:block bg-surface border border-border overflow-hidden">
                         <table className="min-w-full divide-y divide-gray-200">
