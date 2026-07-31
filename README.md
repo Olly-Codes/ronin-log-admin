@@ -3,7 +3,7 @@ The admin dashboard for [Ronin Log](https://github.com/Olly-Codes/ronin-log-api)
 
 This is specifically an admin-only front-end. It's not public facing but the public facing site, which is a separate project, is in progress and it should allow for browsing and commenting on published reviews.
 
-This front end talks to [ronin-log-api](https://github.com/Olly-Codes/ronin-log-api), the REST API is backing the platform.
+This front end talks to [ronin-log-api](https://github.com/Olly-Codes/ronin-log-api), the REST API that is backing the platform.
 
 ## Overview
 Admins can write reviews and add a title, score, cover image, genres, media type and demographic. The written review is automatically saved as a draft and can be published whenever ready. Each form has a live preview that mirrors the actual review page layout, so an admin can be certain that everything is formatted properly and eventually will be what the public facing site shows
@@ -22,14 +22,14 @@ Admins can write reviews and add a title, score, cover image, genres, media type
 - JWT authenticated admin-only access, backed by [ronin-log-api](https://github.com/Olly-Codes/ronin-log-api)'s role-based auth
 - Dark theme, inspired by MAL and Anilist
 
-  ## Tech Stack
-  - React
-  - Tailwind CSS
-  - Axios
-  - Vercel
-  - Render
-  - Supabase
-  - Cloudinary (image uploads)
+## Tech Stack
+- React
+- Tailwind CSS
+- Axios
+- Vercel
+- Render
+- Supabase
+- Cloudinary (image uploads)
 
 ## Getting Started
 ### Prerequisites
