@@ -163,7 +163,7 @@ const DashboardHome = () => {
                                     </tbody>
                                 </table>
 
-                                <div className="md:hiddden flex flex-col gap-3">
+                                <div className="md:hidden flex flex-col gap-3">
                                     {sortedReviews.map((review) => (
                                         <div
                                             key={review.review_id}
