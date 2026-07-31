@@ -31,7 +31,7 @@ const LoginPage = () => {
         <section className="min-h-screen flex items-center justify-center bg-background">
             <form 
                 onSubmit={handleSubmit} 
-                className="w-full max-w-md bg-surface rounded-lg shadow-sm border border-border p-10"
+                className="w-full max-w-xs md:max-w-md bg-surface rounded-lg shadow-sm border border-border p-10"
             >
                 <div className="text-center mb-8">
                     <h1 className="text-2xl font-bold text-primary mb-3">
@@ -79,7 +79,7 @@ const LoginPage = () => {
                 <button 
                     type="submit" 
                     disabled={submitting}
-                    className="w-full bg-accent text-white font-semibold py-2 rounded-md hover:bg-accent-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300"
+                    className="w-full bg-red-600 text-white font-semibold py-2 rounded-md hover:bg-accent-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300"
                 >
                     {submitting ? "Logging in..." : "Login"}
                 </button>

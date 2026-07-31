@@ -88,14 +88,14 @@ const DashboardHome = () => {
                                 <p className="text-muted mb-4">You have {totalUnpublished} draft{totalUnpublished !== 1 ? 's' : ''} waiting to be published.</p>
                                 <button
                                     onClick={() => navigate("reviews")} 
-                                    className="p-4 bg-accent text-white font-semibold py-2 cursor-pointer hover:bg-accent-hover transition-colors duration-300">
+                                    className="p-4 bg-red-600 text-white font-semibold py-2 cursor-pointer hover:bg-accent-hover transition-colors duration-300">
                                     View Reviews
                                 </button>
                             </>
                         ) : (
                             <>
                                 <p className="text-muted">You are all caught up. You can start a new review at any time.</p>
-                                <button className="p-4 bg-accent text-white font-semibold py-2 cursor-pointer hover:bg-accent-hover transition-colors duration-300">
+                                <button className="p-4 bg-red-600 text-white font-semibold py-2 cursor-pointer hover:bg-accent-hover transition-colors duration-300">
                                     Write a Review
                                 </button>
                             </>
@@ -128,30 +128,51 @@ const DashboardHome = () => {
                     {loadingData ? (
                         <p className="text-muted text-sm">Loading reviews...</p>
                         ) : (
-                            <table className="min-w-full divide-y divide-border">
-                                <thead>
-                                    <tr>
-                                        <th className="text-sm font-medium text-left text-muted px-4 py-2">Title</th>
-                                        <th className="text-sm font-medium text-left text-muted px-4 py-2">Created at</th>
-                                        <th className="text-sm font-medium text-left text-muted px-4 py-2">Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {sortedReviews.map((review) => (
-                                        <tr key={review.review_id} className="border-t border-border">
-                                            <td className="px-4 py-2 text-primary">{review.title}</td>
-                                            <td className="px-4 py-2 text-primary">{dateFormat(review.created_at)}</td>
-                                            <td className=" px-4 py-2">
-                                                {review.published ? (
-                                                    <span className="text-sm font-medium text-success">Published</span>
-                                                ) : (
-                                                    <span className="text-sm font-medium text-muted">Draft</span>
-                                                )}
-                                            </td>
+                            <>
+                                <table className="hidden md:table min-w-full divide-y divide-border">
+                                    <thead>
+                                        <tr>
+                                            <th className="text-sm font-medium text-left text-muted px-4 py-2">Title</th>
+                                            <th className="text-sm font-medium text-left text-muted px-4 py-2">Created at</th>
+                                            <th className="text-sm font-medium text-left text-muted px-4 py-2">Status</th>
                                         </tr>
+                                    </thead>
+                                    <tbody>
+                                        {sortedReviews.map((review) => (
+                                            <tr key={review.review_id} className="border-t border-border">
+                                                <td className="px-4 py-2 text-primary">{review.title}</td>
+                                                <td className="px-4 py-2 text-primary">{dateFormat(review.created_at)}</td>
+                                                <td className=" px-4 py-2">
+                                                    {review.published ? (
+                                                        <span className="text-sm font-medium text-success">Published</span>
+                                                    ) : (
+                                                        <span className="text-sm font-medium text-muted">Draft</span>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+
+                                <div className="md:hiddden flex flex-col gap-3">
+                                    {sortedReviews.map((review) => (
+                                        <div
+                                            key={review.review_id}
+                                            className="border-t border-border pt-3 first:border-t-0 first:pt-0"
+                                        >
+                                            <div className="flex items-start justify-between gap-2">
+                                                <p className="text-sm font-medium text-primary">{review.title}</p>
+                                                {review.published ? (
+                                                    <span className="text-sm font-medium text-success shrink-0">Published</span>
+                                                ) : (
+                                                    <span className="text-sm font-medium text-muted shrink-0">Draft</span>
+                                                )}
+                                            </div>
+                                            <p className="text-sm text-muted mt-1">{dateFormat(review.created_at)}</p>
+                                        </div>
                                     ))}
-                                </tbody>
-                            </table>
+                                </div>
+                            </>
                         )
                     }
                 </div>

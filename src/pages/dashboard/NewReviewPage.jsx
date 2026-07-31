@@ -195,7 +195,7 @@ const NewReviewPage = () => {
                             type="file" 
                             id="coverImage" 
                             onChange={handleFileSelect}
-                            className="w-full text-sm text-muted file:mr-3 file:py-2 file:px-4  file:border-0 file:text-sm file:font-medium file:bg-accent file:text-white hover:file:bg-accent-hover file:cursor-pointer cursor-pointer border border-border px-3 py-2"
+                            className="w-full text-sm text-muted file:mr-3 file:py-2 file:px-4  file:border-0 file:text-sm file:font-medium file:bg-red-600 file:text-white hover:file:bg-accent-hover file:cursor-pointer cursor-pointer border border-border px-3 py-2"
                         />
                     </div>
 
@@ -322,7 +322,7 @@ const NewReviewPage = () => {
                     <button 
                         type="submit" 
                         disabled={submitting}
-                        className="bg-accent text-white font-semibold py-2 px-4 cursor-pointer hover:bg-accent-hover transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed self-start"
+                        className="bg-red-600 text-white font-semibold py-2 px-4 cursor-pointer hover:bg-accent-hover transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed self-start"
                     >
                         {submitting ? "Saving..." : "Save Review"}
                     </button>
