@@ -20,7 +20,7 @@ const Header = ({ onMenuClick }) => {
                 </p>
                 <button 
                     onClick={logout}
-                    className="px-2 ml-4 cursor-pointer bg-accent text-white font-semibold py-2 hover:bg-accent-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300"
+                    className="px-2 ml-4 cursor-pointer bg-red-600 text-white font-semibold py-2 hover:bg-accent-hover disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300"
                     >
                         Logout
                 </button>

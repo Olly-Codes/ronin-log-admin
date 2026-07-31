@@ -287,7 +287,7 @@ const EditReviewPage = () => {
                             type="file"
                             id="coverImage"
                             onChange={handleFileSelect}
-                            className="w-full border border-border px-3 py-2 text-sm text-muted file:bg-accent file:mr-3 file:py-2 file:px-4 file:text-primary focus:outline-none focus:ring-2 focus:ring-red-500"
+                            className="w-full border border-border px-3 py-2 text-sm text-muted file:bg-red-600 file:mr-3 file:py-2 file:px-4 file:text-primary focus:outline-none focus:ring-2 focus:ring-red-500"
                         />
                         <p className="text-xs text-muted mt-1">Leave unselected if you would like to keep the current image</p>
                     </div>
