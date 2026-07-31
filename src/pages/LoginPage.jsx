@@ -31,7 +31,7 @@ const LoginPage = () => {
         <section className="min-h-screen flex items-center justify-center bg-background">
             <form 
                 onSubmit={handleSubmit} 
-                className="w-full max-w-md bg-surface rounded-lg shadow-sm border border-border p-10"
+                className="w-full max-w-xs md:max-w-md bg-surface rounded-lg shadow-sm border border-border p-10"
             >
                 <div className="text-center mb-8">
                     <h1 className="text-2xl font-bold text-primary mb-3">
